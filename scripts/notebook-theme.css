@@ -1,0 +1,134 @@
+/*
+ * Tokyo Night theme for the nbconvert HTML export.
+ *
+ * The lab template drives both its own chrome AND the Pygments syntax rules
+ * off --jp-* custom properties, so overriding the variables here restyles
+ * everything without touching a single .highlight rule.
+ *
+ * This block is injected last in <head> by scripts/build-notebook.sh, so it
+ * wins on source order regardless of what the template declared.
+ */
+
+:root {
+  /* surfaces */
+  --jp-layout-color0: #1a1b26;
+  --jp-layout-color1: #16161e;
+  --jp-layout-color2: #1f2335;
+  --jp-layout-color3: #292e42;
+
+  /* text */
+  --jp-content-font-color0: #e6eaf7;
+  --jp-content-font-color1: #c0caf5;
+  --jp-content-font-color2: #9aa5ce;
+  --jp-content-font-color3: #787c99;
+
+  /* rules and borders */
+  --jp-border-color0: #2a2e42;
+  --jp-border-color1: #2a2e42;
+  --jp-border-color2: #22263a;
+  --jp-border-color3: #1c2030;
+
+  /* code cells */
+  --jp-cell-editor-background: #16161e;
+  --jp-cell-editor-border-color: #2a2e42;
+  --jp-cell-prompt-not-active-font-color: #565f89;
+
+  /* prompts — widened because this notebook's execution counts hit 3 digits
+     and the template's 64px default truncates "In [174]:" to "In [14…" */
+  --jp-input-prompt-color: #7aa2f7;
+  --jp-output-prompt-color: #bb9af7;
+  --jp-cell-prompt-width: 92px;
+
+  /* links / accents */
+  --jp-brand-color0: #5d81d4;
+  --jp-brand-color1: #7aa2f7;
+  --jp-brand-color2: #9ab4f9;
+
+  /* typography */
+  --jp-content-font-family: "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Helvetica Neue", Arial, sans-serif;
+  --jp-code-font-family: "JetBrains Mono", ui-monospace, SFMono-Regular,
+    "SF Mono", Menlo, Consolas, monospace;
+  --jp-content-font-size1: 15px;
+  --jp-code-font-size: 13.5px;
+  --jp-code-line-height: 1.6;
+
+  /* syntax — consumed by the generated .highlight rules */
+  --jp-mirror-editor-keyword-color: #bb9af7;
+  --jp-mirror-editor-atom-color: #ff9e64;
+  --jp-mirror-editor-number-color: #ff9e64;
+  --jp-mirror-editor-def-color: #7aa2f7;
+  --jp-mirror-editor-variable-color: #c0caf5;
+  --jp-mirror-editor-variable-2-color: #7dcfff;
+  --jp-mirror-editor-variable-3-color: #2ac3de;
+  --jp-mirror-editor-punctuation-color: #a9b1d6;
+  --jp-mirror-editor-property-color: #7dcfff;
+  --jp-mirror-editor-operator-color: #89ddff;
+  --jp-mirror-editor-comment-color: #565f89;
+  --jp-mirror-editor-string-color: #9ece6a;
+  --jp-mirror-editor-string-2-color: #9ece6a;
+  --jp-mirror-editor-meta-color: #bb9af7;
+  --jp-mirror-editor-qualifier-color: #9aa5ce;
+  --jp-mirror-editor-builtin-color: #2ac3de;
+  --jp-mirror-editor-bracket-color: #a9b1d6;
+  --jp-mirror-editor-tag-color: #f7768e;
+  --jp-mirror-editor-attribute-color: #bb9af7;
+  --jp-mirror-editor-header-color: #7aa2f7;
+  --jp-mirror-editor-quote-color: #9ece6a;
+  --jp-mirror-editor-link-color: #7aa2f7;
+  --jp-mirror-editor-error-color: #f7768e;
+}
+
+body {
+  background: var(--jp-layout-color0);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Keep prose at a readable measure — the template runs full-bleed by default. */
+#notebook-container,
+.jp-Notebook {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+/* Soften the code cells into cards. */
+.jp-Cell .jp-InputArea-editor {
+  border-radius: 8px;
+  border: 1px solid var(--jp-cell-editor-border-color);
+}
+
+.jp-Cell .jp-InputArea-editor .highlight pre {
+  padding: 0.85rem 1rem;
+}
+
+/* Headings get tighter tracking than the template's default. */
+.jp-RenderedHTMLCommon h1,
+.jp-RenderedHTMLCommon h2,
+.jp-RenderedHTMLCommon h3 {
+  color: var(--jp-content-font-color0);
+  letter-spacing: -0.015em;
+}
+
+/*
+ * Plot outputs are PNGs from Plots.jl with a light background baked into the
+ * pixels — they cannot be recolored from CSS. A border and radius frame them as
+ * deliberate figures. Deliberately no background or padding here: the MNIST
+ * digit output is a dark image, and a white mat around it looks like a mistake.
+ */
+.jp-OutputArea-output img {
+  border-radius: 8px;
+  border: 1px solid var(--jp-border-color1);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Plain-text results (accuracy, type signatures) read as quiet metadata. */
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color2);
+}
+
+/* MathJax inherits color, but the display blocks need breathing room. */
+.MathJax_Display {
+  margin: 1.25rem 0 !important;
+}
