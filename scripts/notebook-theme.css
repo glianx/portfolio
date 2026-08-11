@@ -33,7 +33,7 @@
   --jp-cell-editor-border-color: #2a2e42;
   --jp-cell-prompt-not-active-font-color: #565f89;
 
-  /* prompts — widened because this notebook's execution counts hit 3 digits
+  /* prompts, widened because this notebook's execution counts hit 3 digits
      and the template's 64px default truncates "In [174]:" to "In [14…" */
   --jp-input-prompt-color: #7aa2f7;
   --jp-output-prompt-color: #bb9af7;
@@ -53,7 +53,7 @@
   --jp-code-font-size: 13.5px;
   --jp-code-line-height: 1.6;
 
-  /* syntax — consumed by the generated .highlight rules */
+  /* syntax, consumed by the generated .highlight rules */
   --jp-mirror-editor-keyword-color: #bb9af7;
   --jp-mirror-editor-atom-color: #ff9e64;
   --jp-mirror-editor-number-color: #ff9e64;
@@ -84,7 +84,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Keep prose at a readable measure — the template runs full-bleed by default. */
+/* Keep prose at a readable measure; the template runs full-bleed by default. */
 #notebook-container,
 .jp-Notebook {
   max-width: 56rem;
@@ -112,7 +112,7 @@ body {
 
 /*
  * Plot outputs are PNGs from Plots.jl with a light background baked into the
- * pixels — they cannot be recolored from CSS. A border and radius frame them as
+ * pixels that cannot be recolored from CSS. A border and radius frame them as
  * deliberate figures. Deliberately no background or padding here: the MNIST
  * digit output is a dark image, and a white mat around it looks like a mistake.
  */

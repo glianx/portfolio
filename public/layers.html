@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>mnist</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>layers</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7669,7 +7669,7 @@ body {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [212]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">MLDatasets</span>
@@ -7685,7 +7685,7 @@ body {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [213]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [40]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="n">train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MLDatasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="ss">:train</span><span class="p">)</span>
@@ -7699,9 +7699,9 @@ body {
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[213]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>dataset MNIST:
   metadata  =&gt;    Dict{String, Any} with 3 entries
   split     =&gt;    :test
@@ -7716,11 +7716,15 @@ body {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [214]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="n">train_x</span><span class="p">,</span><span class="w"> </span><span class="n">train_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="o">.</span><span class="n">targets</span><span class="p">;</span>
 <span class="n">test_x</span><span class="p">,</span><span class="w"> </span><span class="n">test_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">test</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">.</span><span class="n">targets</span><span class="p">;</span>
+
+<span class="c"># mnist is 0-9, julia is 1-10</span>
+<span class="n">train_labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_y</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">test_labels</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">test_y</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -7731,7 +7735,7 @@ body {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [215]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [42]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="n">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_x</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">'</span>
@@ -7745,9 +7749,9 @@ body {
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[215]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <img alt="No description has been provided for this image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABwCAAAAADji6uXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAiVJREFUaAW9wT2IFgQABuAHemnI4aJFISgJwkDIIiqIsMLcajiKIEEIshosmgSHhhoUIW/IcIgCISHa+psKsp8hEKSSSAlyECon61Q+jMDT4RuO7w6/n5Pe54myKIuyKIuyKIuyKIuyKIuyKIuyKIuyKIuyKIuyKIsZ3YQ5y17FLdiE3TiI5/EvDuAto6IsyqIsJrgDN+MRPIpb8YzV/sAhzOMSTuI7q0VZlEVZjHE/vsac8ZbwBgb4CH/hH/xmtSiLsiiLMc7iPOasdhyLeAL/4ajpRFmURVmM8Tf24Cn8hEOGfsZ2DLAZr5telEVZlMUEn+IYLmELXsQCBoZ+xcumF2VRFmUxhYuGLhjahY+xZHZRFmVRFjN4Ew/gMTyJr8wuyqIsymIGA7yEH/E+vsEJHMZV04myKIuymNEZvIAj2ImdWIcPcc5kURZlURZr8Al+xwK2YT/uxD78abwoi7IoizX6Bc/haRzBK7gb240XZVEWZXEDFnEUHyDYisfxreuLsiiLslije/EsHkQMncL3xouyKIuymNEmvIZ5bLDsCs5hyXhRFmVRFlPagB3YjY1GncA+fG6yKIuyKIsJ1mMz3sU9Rh3H2/gMS6YTZVEWZXEdt+E93Ie7jPoBC/gSl80myqIsymKFh7EHD+F2oy7jHezHwNpEWZRFWawwj3nLTuMLXMFBLLoxURZlURYr7MVe/58oi7Ioi7Ioi7Ioi7Ioi7IouwZsVVgTmd3ynQAAAABJRU5ErkJg"/>
 </div>
 </div>
@@ -7758,11 +7762,12 @@ body {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [216]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [43]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="n">INPUT_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">784</span>
 <span class="n">OUTPUT_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
+<span class="n">HIDDEN_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
 
 <span class="n">TRAIN_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60000</span>
 <span class="n">TEST_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span>
@@ -7775,20 +7780,20 @@ body {
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[216]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>10000</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c7411e57">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c7411e57">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [217]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [155]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">flatten</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
@@ -7800,7 +7805,7 @@ body {
 <span class="k">end</span>
 
 <span class="k">function</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">.+</span><span class="w"> </span><span class="n">b</span>
 <span class="k">end</span>
 
 <span class="k">function</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">act</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span>
@@ -7809,7 +7814,8 @@ body {
 <span class="k">end</span>
 <span class="w">    </span>
 <span class="k">function</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span>
-<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="w">    </span><span class="n">z_stable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">maximum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z_stable</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z_stable</span><span class="p">))</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 <span class="k">end</span>
 
@@ -7821,20 +7827,8 @@ body {
 <span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="w">    </span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span>
-<span class="k">end</span>
+<span class="k">end</span><span class="p">;</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[217]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>one_hot (generic function with 1 method)</pre>
 </div>
 </div>
 </div>
@@ -7861,23 +7855,35 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [127]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">∇zl</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">∇aoL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">y</span>
 <span class="k">end</span>
 
-<span class="k">function</span><span class="w"> </span><span class="n">∇al</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇zl</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">.&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="k">function</span><span class="w"> </span><span class="n">∇woL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">zh</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇aoL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">zh</span><span class="o">'</span>
 <span class="k">end</span>
 
-<span class="k">function</span><span class="w"> </span><span class="n">∇wl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇al</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">x</span><span class="o">'</span>
+<span class="k">function</span><span class="w"> </span><span class="n">∇boL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇aoL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="k">function</span><span class="w"> </span><span class="n">∇bl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇al</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="k">function</span><span class="w"> </span><span class="n">∇zhL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Wo</span><span class="o">'</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇aoL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">∇ahL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇zhL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">ah</span><span class="w"> </span><span class="o">.&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">∇whL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇ahL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">input</span><span class="o">'</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">∇bhL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇ahL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span>
 <span class="k">end</span>
 </pre></div>
 </div>
@@ -7888,10 +7894,10 @@ $$</p>
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>∇bl (generic function with 2 methods)</pre>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>∇bhL (generic function with 1 method)</pre>
 </div>
 </div>
 </div>
@@ -7901,40 +7907,48 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [228]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [156]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">train_model</span><span class="p">(</span><span class="n">α</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
-<span class="w">    </span><span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_SIZE</span><span class="p">))</span>
-<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_SIZE</span><span class="p">)</span>
-<span class="w">    </span>
+<span class="w">    </span><span class="n">Wh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">randn</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">HIDDEN_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_SIZE</span><span class="p">))</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">INPUT_SIZE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Wo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">randn</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">HIDDEN_SIZE</span><span class="p">))</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">HIDDEN_SIZE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">bh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">HIDDEN_SIZE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">bo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_SIZE</span><span class="p">)</span>
+
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">k</span>
 <span class="w">        </span><span class="n">correct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-
+<span class="w">        </span>
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span>
 <span class="w">            </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_x</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
 <span class="w">            </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flatten</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 <span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one_hot</span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
-<span class="w">            </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="w">            </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="w">            </span><span class="n">ah</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">Wh</span><span class="p">,</span><span class="w"> </span><span class="n">bh</span><span class="p">)</span>
+<span class="w">            </span><span class="n">zh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span><span class="w"> </span><span class="n">ah</span><span class="p">)</span>
 
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">t</span>
+<span class="w">            </span><span class="n">ao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">zh</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">,</span><span class="w"> </span><span class="n">bo</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">ao</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">argmax</span><span class="p">(</span><span class="n">ao</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">t</span>
 <span class="w">                </span><span class="n">correct</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">            </span><span class="k">end</span>
 
-<span class="w">            </span><span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇wl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="w">            </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇bl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="w">            </span><span class="n">Wh</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇whL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">)</span>
+<span class="w">            </span><span class="n">bh</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇bhL</span><span class="p">(</span><span class="n">ah</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">Wo</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">Wo</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇woL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">zh</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="w">            </span><span class="n">bo</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇boL</span><span class="p">(</span><span class="n">ao</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="w">            </span>
 <span class="w">        </span><span class="k">end</span>
 
-<span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">"epoch </span><span class="si">$epoch</span><span class="s"> accuracy </span><span class="si">$</span><span class="p">(</span><span class="n">correct</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="s">"</span><span class="p">)</span>
-<span class="w">        </span>
+<span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">"epoch </span><span class="si">$epoch</span><span class="s"> accuracy </span><span class="si">$</span><span class="p">(</span><span class="n">round</span><span class="p">(</span><span class="n">correct</span><span class="o">/</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span><span class="s">"</span><span class="p">)</span>
 <span class="w">    </span><span class="k">end</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="n">b</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Wh</span><span class="p">,</span><span class="n">Wo</span><span class="p">,</span><span class="n">bh</span><span class="p">,</span><span class="n">bo</span>
 <span class="k">end</span>
 </pre></div>
 </div>
@@ -7945,10 +7959,10 @@ $$</p>
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[228]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>train_model (generic function with 2 methods)</pre>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>train_model (generic function with 1 method)</pre>
 </div>
 </div>
 </div>
@@ -7958,16 +7972,18 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [229]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [157]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="k">struct</span> <span class="kt">Model</span>
-<span class="w">    </span><span class="n">W</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
-<span class="w">    </span><span class="n">b</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
+<span class="w">    </span><span class="n">Wh</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
+<span class="w">    </span><span class="n">Wo</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
+<span class="w">    </span><span class="n">bh</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
+<span class="w">    </span><span class="n">bo</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
 <span class="k">end</span>
 
 <span class="n">α</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span>
-<span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
+<span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
 <span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRAIN_SIZE</span>
 
 <span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Model</span><span class="p">(</span><span class="n">train_model</span><span class="p">(</span><span class="n">α</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">...</span><span class="p">);</span>
@@ -7983,22 +7999,27 @@ $$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>epoch 1 accuracy 0.8835166666666666
-epoch 2 accuracy 0.91355
-epoch 3 accuracy 0.9184333333333333
-epoch 4 accuracy 0.9208166666666666
-epoch 5 accuracy 0.9226
+<pre>epoch 1 accuracy 0.935
+epoch 2 accuracy 0.97
+epoch 3 accuracy 0.979
+epoch 4 accuracy 0.984
+epoch 5 accuracy 0.988
+epoch 6 accuracy 0.991
+epoch 7 accuracy 0.993
+epoch 8 accuracy 0.995
+epoch 9 accuracy 0.996
+epoch 10 accuracy 0.997
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6c12518f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6c12518f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [221]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [152]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
@@ -8007,9 +8028,13 @@ epoch 5 accuracy 0.9226
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span>
 <span class="w">        </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">test_x</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
 <span class="w">        </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flatten</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
-<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="w">        </span><span class="n">y_hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">ah</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">Wh</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">bh</span><span class="p">)</span>
+<span class="w">        </span><span class="n">zh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span><span class="w"> </span><span class="n">ah</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">ao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">zh</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">Wo</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">bo</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">y_hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argmax</span><span class="p">(</span><span class="n">ao</span><span class="p">)</span>
 <span class="w">        </span><span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y_hat</span>
 <span class="w">    </span><span class="k">end</span>
 
@@ -8019,7 +8044,7 @@ epoch 5 accuracy 0.9226
 <span class="k">function</span><span class="w"> </span><span class="n">accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
 <span class="w">    </span><span class="n">correct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span><span class="w"> </span><span class="n">y_t</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">zip</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">y_p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y_t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">y_p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y_t</span>
 <span class="w">            </span><span class="n">correct</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">        </span><span class="k">end</span>
 <span class="w">    </span><span class="k">end</span>
@@ -8029,24 +8054,12 @@ epoch 5 accuracy 0.9226
 <span class="k">function</span><span class="w"> </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
 <span class="w">    </span><span class="n">cm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_SIZE</span><span class="p">)</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span><span class="w"> </span><span class="n">y_t</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">zip</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
-<span class="w">        </span><span class="n">cm</span><span class="p">[</span><span class="kt">Int</span><span class="p">(</span><span class="n">y_p</span><span class="p">),</span><span class="w"> </span><span class="kt">Int</span><span class="p">(</span><span class="n">y_t</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="n">cm</span><span class="p">[</span><span class="kt">Int</span><span class="p">(</span><span class="n">y_p</span><span class="p">),</span><span class="w"> </span><span class="kt">Int</span><span class="p">(</span><span class="n">y_t</span><span class="p">)]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">    </span><span class="k">end</span>
 
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">cm</span>
-<span class="k">end</span>
+<span class="k">end</span><span class="p">;</span>
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[221]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>confusion_matrix (generic function with 1 method)</pre>
 </div>
 </div>
 </div>
@@ -8056,13 +8069,13 @@ epoch 5 accuracy 0.9226
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [222]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [142]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-julia"><pre><span></span><span class="n">y_pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">TEST_SIZE</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test_y</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test_labels</span><span class="p">))</span>
 
-<span class="n">cm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test_y</span><span class="p">)</span>
+<span class="n">cm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test_labels</span><span class="p">)</span>
 <span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="s">"Predicted"</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">"True"</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -8076,14 +8089,14 @@ epoch 5 accuracy 0.9226
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.9107
+<pre>0.9695
 </pre>
 </div>
 </div>
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[222]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<img alt="No description has been provided for this image" src="data:image/png;base64,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">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<img alt="No description has been provided for this image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAGQCAIAAAD9V4nPAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO3dd1xUV9748TO0CAIDKgi42LG7Fiyo0SiIa9RoJMWeqHHVx82TYnweTWJdN3GjrhrXkvVRV39ZsxELxpKicTXNHlviqokFEJQmoggoMPf8/pjNBBCBO17mXpjP+zV/3LlzuOcrol9ON0kpBQAAzspF7wAAANATiRAA4NRIhAAAp0YiBAA4NRIhAMCpkQgBAE6NRAgAcGokQgCAUyMRAgCcGokQAODU3PQOoHQvv/zyuHHjXV1d9Q5EY4qiuLjwy0fp+OaUrfp+f0yP/ghNvznG2nWyXVOPR3+IVt8fk3fLCpS6I4VF1WMvXrz01cGTkyZNsi+qR2cy5l6jnp41793L1zsKVJTJZLD/oI31U22oYAwWjRAmk7veIRQnC/WOoJj8Aw31DuFXbr1/KreMIj+V4paqx36y4/sP/9/VuLg4e+N6VAZtEQIAqiJFWqRQ98uE2hak5kiEAADNSGGRUl1ik1KppGAqyGA9WgAAOBYtQgCAZhRpkSrHWdW2IDVHIgQAaMeORMgYIQCg2pBKoepEqDBGCACAfmgRAgA0I+kaBQA4MylUJ0LBZBkAQLUhlUKpqB0j1DkRMkYIAHBqldUiTE9PP3nypKura9++fYve//rrr0+ePNmsWbMnn3zSZNJgs10AgIFIi/r9WqvjrNEPPvigfv36EydOnDFjRtH7CxcuHDNmTGpq6owZMyZPnlwZVQMA9CQtUhaqfFXHrtGRI0dmZ2e/8847RW/m5OS8++6727dvX7BgwZdffvnhhx9evXq1MmoHAOhGWoRSqO5VLROhr6+vm1vJTtfDhw/7+PiEh4cLIQIDA7t06bJ3797KqB0AgIpz3KzR69evh4SE2N6GhIRcv379YYUtFp1/QQAAlFChA36VQqEUqHyuMy2fKHoIsDEPBAYAPBJZqH6yjEUI10oJpmIct3wiODg4NTXV9jY1NTU4OPhhhV1d9fymAAAeVH5zUNg1Rqh3i9BxiTAiIuLWrVtnz54VQmRmZh45cqTEygoAAByvUrpGf/jhh/nz5yckJFy5cuX555/v0KHDm2++6ePj8z//8z8xMTGjR4/etWvX888/37Rp08qoHQCgG8UiVO4so/us0UpJhIGBgc8995ztra0LdNasWd27dz9x4sTMmTOHDBlSGVUDAPRkx4J6qfOC+kpJhHXr1i2aCIuKioqKioqqjEoBAPqThSaVLUKT3i1C9hoFADg1Tp8AAGhHUVTPAtX7hHoSIQBAMybFUuW6RkmEAADtSIvqFqHek2UYIwQAODVahAAA7dixjlDvnWVIhAAAzZgUi6mqdY2SCAEAGrJjQT3rCAEA0A8tQgCAZkyKorZr1KR31ygtQgCAdhSL6leZiXD//v1z584dMWLE559/XvT+t99+O2jQoB49erz33nvKL0vy8/Pz58yZ071795iYmFOnTtkKnzp1KiYmplu3brNnz87Pzy9RBS3CCjHpHcADDBaR3r/QlWCoQ59NRvvLMta3R6g/xLVyFeyuo3cIxbj1uap3CL+qyHnqJqm+RVjmzjKbN2/28vI6efJk9+7d+/fvb72ZnJw8cODApUuXtmnTZsKECe7u7lOnThVCzJ079+DBg8uXLz906FB0dPTly5fNZvPt27ejo6NnzpzZs2fPV199taCgYMGCBUWroEUIADCuNWvWLFu2rH79+kVvrl+/Pioqavz48V26dFmwYMFf//pXIUR+fv6aNWv+8pe/dOrU6ZVXXmnduvWmTZuEEB999FHLli1fe+218PDwJUuWrFmz5v79+0WfRiIEAGhH667RUp05c6Zr167W665du8bHx9++ffvatWuZmZmdO3e23o+IiDh9+nSJwp06dbKWLPo0EiEAQDuKYl1KqOalOhGmpqb6+flZr/39/YUQKSkpaWlpPj4+bm5utvupqalCiLS0NFthFxcXPz8/630bEiEAQDtSEYq619WkvD179tQqbvr06WVU4uvrm5uba73OyckRQpjNZutN+ctIZk5OjtlsFkL4+Pjk5eXZvjYnJ8fX17fo05gsAwDQU6N6Nfr16/fhhx8WvVmzZs0yvqRhw4aXL1+2Xl++fNnLyysgIMDT01NKmZiY2KBBAyHEpUuXmjZtai184cIFa+GkpKSCgoLQ0NCiT6NFCADQjEl916iQiru7u39xHh4eZdQyYsSIrVu3Wns4V65cOXz4cFdXV7PZPHDgwJUrVwoh4uPjP/vss5EjR1oLf/7551evXrUWHjBggK2n1IoWIQBAO3Ycw1TmGOHo0aOtkz+//PLLV155JTY29rnnnnv88cdffPHFli1b+vv7m83m3bt3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">
 </img></div>
 </div>
 </div>

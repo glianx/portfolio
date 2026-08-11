@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>mnist</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>learnings</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7664,199 +7664,152 @@ body {
 </style>
 </head>
 <body class="jp-Notebook" data-jp-theme-light="false" data-jp-theme-name="JupyterLab Dark">
-<main><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8be96615">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [212]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">MLDatasets</span>
-<span class="k">using</span><span class="w"> </span><span class="n">Images</span>
-<span class="k">using</span><span class="w"> </span><span class="n">Plots</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d6987ba6">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [213]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="n">train</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MLDatasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="ss">:train</span><span class="p">)</span>
-<span class="n">test</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">MLDatasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="ss">:test</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[213]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>dataset MNIST:
-  metadata  =&gt;    Dict{String, Any} with 3 entries
-  split     =&gt;    :test
-  features  =&gt;    28×28×10000 Array{Float32, 3}
-  targets   =&gt;    10000-element Vector{Int64}</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=78842f55">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [214]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="n">train_x</span><span class="p">,</span><span class="w"> </span><span class="n">train_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">train</span><span class="o">.</span><span class="n">targets</span><span class="p">;</span>
-<span class="n">test_x</span><span class="p">,</span><span class="w"> </span><span class="n">test_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">test</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">.</span><span class="n">targets</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=277dfa6a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [215]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="n">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_x</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="o">:</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">'</span>
-<span class="n">Gray</span><span class="o">.</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[215]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<img alt="No description has been provided for this image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABwCAAAAADji6uXAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAiVJREFUaAW9wT2IFgQABuAHemnI4aJFISgJwkDIIiqIsMLcajiKIEEIshosmgSHhhoUIW/IcIgCISHa+psKsp8hEKSSSAlyECon61Q+jMDT4RuO7w6/n5Pe54myKIuyKIuyKIuyKIuyKIuyKIuyKIuyKIuyKIuyKIsZ3YQ5y17FLdiE3TiI5/EvDuAto6IsyqIsJrgDN+MRPIpb8YzV/sAhzOMSTuI7q0VZlEVZjHE/vsac8ZbwBgb4CH/hH/xmtSiLsiiLMc7iPOasdhyLeAL/4ajpRFmURVmM8Tf24Cn8hEOGfsZ2DLAZr5telEVZlMUEn+IYLmELXsQCBoZ+xcumF2VRFmUxhYuGLhjahY+xZHZRFmVRFjN4Ew/gMTyJr8wuyqIsymIGA7yEH/E+vsEJHMZV04myKIuymNEZvIAj2ImdWIcPcc5kURZlURZr8Al+xwK2YT/uxD78abwoi7IoizX6Bc/haRzBK7gb240XZVEWZXEDFnEUHyDYisfxreuLsiiLslije/EsHkQMncL3xouyKIuymNEmvIZ5bLDsCs5hyXhRFmVRFlPagB3YjY1GncA+fG6yKIuyKIsJ1mMz3sU9Rh3H2/gMS6YTZVEWZXEdt+E93Ie7jPoBC/gSl80myqIsymKFh7EHD+F2oy7jHezHwNpEWZRFWawwj3nLTuMLXMFBLLoxURZlURYr7MVe/58oi7Ioi7Ioi7Ioi7Ioi7IouwZsVVgTmd3ynQAAAABJRU5ErkJg"/>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=07a021b8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [216]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="n">INPUT_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">784</span>
-<span class="n">OUTPUT_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span>
-
-<span class="n">TRAIN_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60000</span>
-<span class="n">TEST_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[216]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>10000</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c7411e57">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [217]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">flatten</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">reshape</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_SIZE</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">act</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span>
-<span class="w">    </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">act</span><span class="o">.</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">h</span>
-<span class="k">end</span>
-<span class="w">    </span>
-<span class="k">function</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span>
-<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">loss</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">one_hot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
-<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-<span class="w">    </span><span class="n">y</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y</span>
-<span class="k">end</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[217]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>one_hot (generic function with 1 method)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6f5255c3">
+<main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=86c71290">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>$$
-\nabla_z \ell(p, y) =
-\begin{cases}
-p_i \geq 0, &amp; i \neq t \quad \Rightarrow \quad z \leftarrow z - \alpha\,\partial \;\text{(decreases wrong logit)} \\[4pt]
-p_i - 1 \leq 0, &amp; i = t \quad \Rightarrow \quad z \leftarrow z - \alpha\,\partial \;\text{(increases right logit)}
-\end{cases}
-$$</p>
+<h4 id="don't-initialize-weights-that-cause-exploding-activations">don't initialize weights that cause exploding activations<a class="anchor-link" href="#don't-initialize-weights-that-cause-exploding-activations">¶</a></h4><table>
+<thead>
+<tr>
+<th>object</th>
+<th>structure</th>
+<th>value</th>
+<th>stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>img</td>
+<td>784 px</td>
+<td>0-1</td>
+<td>total ~100</td>
+</tr>
+<tr>
+<td>Wh</td>
+<td>rand()</td>
+<td>0-1</td>
+<td><strong>mean 0.5</strong></td>
+</tr>
+<tr>
+<td>ah</td>
+<td>Wh $\cdot$ img + b</td>
+<td>$\gt$ 0</td>
+<td>node = ~0.5 * 100 total + 0.5 = 50.5 <br/> $O(\text{fan in})$</td>
+</tr>
+<tr>
+<td>ao</td>
+<td>Wo $\cdot$ zh + b</td>
+<td>$\gt$ 0</td>
+<td>node = 0.5 * 100 nodes * 50.5 = 2525 <br/> $O(\Pi\ \text{fan in})$</td>
+</tr>
+</tbody>
+</table>
+<p>exploding activations can cause:</p>
+<ul>
+<li>massive changes in weights</li>
+<li>activations to go below zero</li>
+<li>softmax saturation</li>
+</ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=101c4de6">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=754c3007">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="use-zero-mean-and-He-(Kaiming)-initialization">use zero mean and He (Kaiming) initialization<a class="anchor-link" href="#use-zero-mean-and-He-(Kaiming)-initialization">¶</a></h4><table>
+<thead>
+<tr>
+<th>object</th>
+<th>structure</th>
+<th>value</th>
+<th>stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>img</td>
+<td>784 px</td>
+<td>0-1</td>
+<td>total ~100</td>
+</tr>
+<tr>
+<td>Wh</td>
+<td>randn() * $\sqrt{\frac{2}{784}}$</td>
+<td>$\pm$</td>
+<td><strong>mean 0, std $\sqrt{\frac{2}{784}} \approx 0505$</strong></td>
+</tr>
+<tr>
+<td>ah</td>
+<td>Wh $\cdot$ img + b</td>
+<td></td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td>ao</td>
+<td>Wo $\cdot$ zh + b</td>
+<td></td>
+<td>$O(1)$</td>
+</tr>
+</tbody>
+</table>
+<p>sum $\propto\sqrt{784}$, weights $\sqrt{1/784}$, so net effect $O(1)$</p>
+<p>zero mean causes sum of inputs to partially cancel</p>
+<ul>
+<li>like random walk with 784 steps $\in \{+1,-1\}$, end up around 28 steps away</li>
+<li>reduces growth from linear $O(\text{fan in})$ to $O(\sqrt{\text{fan in}})$</li>
+</ul>
+<p>He initialization causes weights to downscale inputs</p>
+<ul>
+<li>pre-emptively multiplies by weights with std $\sqrt{\frac{2}{\text{fan in}}}$</li>
+<li>2 factor accounts for ReLU zeroing out half the units</li>
+<li>reduces growth from square-root $O(\sqrt{\text{fan in}})$ to constant $O(1)$</li>
+</ul>
+<p>net effect is $O(1)$ so activations stay stable across layers</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=34b7dde4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="stabilize-softmax">stabilize softmax<a class="anchor-link" href="#stabilize-softmax">¶</a></h4>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ad5773d6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="n">softmax_stable</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">z_stable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">maximum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z_stable</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="p">(</span><span class="n">z_stable</span><span class="p">))</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6adae54d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7864,113 +7817,9 @@ $$</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">∇zl</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">y</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">∇al</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇zl</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">.&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">∇wl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇al</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">x</span><span class="o">'</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">∇bl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">∇al</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="k">end</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>∇bl (generic function with 2 methods)</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1d7d50e2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [228]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">train_model</span><span class="p">(</span><span class="n">α</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
-<span class="w">    </span><span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_SIZE</span><span class="p">))</span>
-<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_SIZE</span><span class="p">)</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">epoch</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">k</span>
-<span class="w">        </span><span class="n">correct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span>
-<span class="w">            </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_x</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
-<span class="w">            </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flatten</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-
-<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">            </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">one_hot</span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
-
-<span class="w">            </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
-<span class="w">            </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="w">            </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">t</span>
-<span class="w">                </span><span class="n">correct</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">            </span><span class="k">end</span>
-
-<span class="w">            </span><span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇wl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="w">            </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">α</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">∇bl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="w">        </span><span class="k">end</span>
-
-<span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">"epoch </span><span class="si">$epoch</span><span class="s"> accuracy </span><span class="si">$</span><span class="p">(</span><span class="n">correct</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="s">"</span><span class="p">)</span>
-<span class="w">        </span>
-<span class="w">    </span><span class="k">end</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">W</span><span class="p">,</span><span class="n">b</span>
-<span class="k">end</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[228]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>train_model (generic function with 2 methods)</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6282dce0">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [229]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">struct</span> <span class="kt">Model</span>
-<span class="w">    </span><span class="n">W</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
-<span class="w">    </span><span class="n">b</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span>
-<span class="k">end</span>
-
-<span class="n">α</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span>
-<span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
-<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRAIN_SIZE</span>
-
-<span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Model</span><span class="p">(</span><span class="n">train_model</span><span class="p">(</span><span class="n">α</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="o">...</span><span class="p">);</span>
+<div class="highlight hl-julia"><pre><span></span><span class="n">hi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">]</span>
+<span class="nd">@show</span><span class="w"> </span><span class="n">softmax</span><span class="p">(</span><span class="n">hi</span><span class="p">)</span>
+<span class="nd">@show</span><span class="w"> </span><span class="n">softmax_stable</span><span class="p">(</span><span class="n">hi</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -7983,87 +7832,41 @@ $$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>epoch 1 accuracy 0.8835166666666666
-epoch 2 accuracy 0.91355
-epoch 3 accuracy 0.9184333333333333
-epoch 4 accuracy 0.9208166666666666
-epoch 5 accuracy 0.9226
+<pre>softmax(hi) = [NaN, NaN]
+softmax_stable(hi) = [0.5, 0.5]
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6c12518f">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0b554025">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="don't-apply-ReLU-before-softmax">don't apply ReLU before softmax<a class="anchor-link" href="#don't-apply-ReLU-before-softmax">¶</a></h4><ul>
+<li>ReLU is for adding nonlinearity to hidden layers</li>
+</ul>
+<p>forward pass:</p>
+<ul>
+<li>ReLU removes signal for unlikely outputs from softmax</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=69c340cb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [221]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [34]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
-<span class="w">    </span><span class="n">y_pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">n</span>
-<span class="w">        </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">test_x</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="o">:</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
-<span class="w">        </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flatten</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre_activation</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">W</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
-<span class="w">        </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">post_activation</span><span class="p">(</span><span class="n">relu</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">)</span>
-<span class="w">        </span><span class="n">y_hat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-<span class="w">        </span><span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y_hat</span>
-<span class="w">    </span><span class="k">end</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">y_pred</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
-<span class="w">    </span><span class="n">correct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span><span class="w"> </span><span class="n">y_t</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">zip</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">y_p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y_t</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">            </span><span class="n">correct</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="k">end</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">correct</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="k">function</span><span class="w"> </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
-<span class="w">    </span><span class="n">cm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zeros</span><span class="p">(</span><span class="n">OUTPUT_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_SIZE</span><span class="p">)</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span><span class="w"> </span><span class="n">y_t</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">zip</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">y_true</span><span class="p">)</span>
-<span class="w">        </span><span class="n">cm</span><span class="p">[</span><span class="kt">Int</span><span class="p">(</span><span class="n">y_p</span><span class="p">),</span><span class="w"> </span><span class="kt">Int</span><span class="p">(</span><span class="n">y_t</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">    </span><span class="k">end</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">cm</span>
-<span class="k">end</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[221]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>confusion_matrix (generic function with 1 method)</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=707a6966">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [222]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="n">y_pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">TEST_SIZE</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="n">accuracy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test_y</span><span class="p">))</span>
-
-<span class="n">cm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">test_y</span><span class="p">)</span>
-<span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="s">"Predicted"</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="s">"True"</span><span class="p">)</span>
+<div class="highlight hl-julia"><pre><span></span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">round</span><span class="o">.</span><span class="p">(</span><span class="n">softmax</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">round</span><span class="o">.</span><span class="p">(</span><span class="n">softmax</span><span class="p">(</span><span class="n">relu</span><span class="o">.</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -8076,15 +7879,162 @@ epoch 5 accuracy 0.9226
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0.9107
+<pre>[0.09, 0.245, 0.665]
+[0.212, 0.212, 0.576]
 </pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=097326fb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>backward pass:</p>
+<ul>
+<li>ReLU causes dead neurons</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3fc7c172">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [76]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-julia"><pre><span></span><span class="c"># final layer</span>
+<span class="n">W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">0.3</span><span class="w"> </span><span class="mf">0.1</span><span class="w"> </span>
+<span class="w">     </span><span class="o">-</span><span class="mf">0.5</span><span class="w"> </span><span class="mf">0.2</span><span class="w"> </span><span class="p">]</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span>
+<span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.2</span><span class="w"> </span><span class="p">]</span>
+
+<span class="c"># one hot, target = 2</span>
+<span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">]</span>
+
+<span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="n">b</span>
+
+<span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">relu</span><span class="o">.</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">round</span><span class="o">.</span><span class="p">(</span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">∇zL</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">y</span>
+<span class="n">∇aL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">∇zL</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">.&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="n">∇wL</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">∇aL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="o">'</span>
+<span class="n">∇bL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">∇aL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">α</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">W</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">α</span><span class="o">*</span><span class="n">∇wL</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">b</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">α</span><span class="o">*</span><span class="n">∇bL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">a2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">W</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="n">b</span>
+
+<span class="n">a2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[222]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<img alt="No description has been provided for this image" src="data:image/png;base64,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">
-</img></div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[76]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>2-element Vector{Float64}:
+ -4.38
+  0.0</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=090f01da">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>$$W = \begin{bmatrix} 0.3 &amp; 0.1 \\ \mathbf{-0.5} &amp; \mathbf{0.2} \end{bmatrix}, \quad
+x = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad
+b = \begin{bmatrix} 0.3 \\ \mathbf{-0.2} \end{bmatrix}$$</p>
+<p>Forward pass</p>
+<p>$$
+\begin{aligned}
+a &amp;= Wx + b &amp;&amp;= \begin{bmatrix} 1 \\ -1 \end{bmatrix} \\[4pt]
+z &amp;= \text{relu}(a) &amp;&amp;= \begin{bmatrix} 1 \\ 0 \end{bmatrix} \\[4pt]
+p &amp;= \text{softmax}(z) &amp;&amp;\approx \begin{bmatrix} 0.73 \\ 0.27 \end{bmatrix}
+\end{aligned}
+$$</p>
+<p>Backward pass (target $y = [0, 1]^T$)
+$$
+\begin{aligned}
+\nabla_z L &amp;= p - y &amp;&amp;= \begin{bmatrix} 0.73 \\ -0.73 \end{bmatrix} \\[4pt]
+\nabla_a L &amp;= \nabla_z L \odot \mathbb{1}[a &gt; 0] &amp;&amp;= \begin{bmatrix} 0.73 \\ 0 \end{bmatrix} \\[4pt]
+\nabla_W L &amp;= \nabla_a L \, x^\top &amp;&amp;= \begin{bmatrix} 0.73 \\ 0 \end{bmatrix} \begin{bmatrix} 2 &amp; 1 \end{bmatrix} = \begin{bmatrix} 1.46 &amp; 0.73 \\ 0 &amp; 0 \end{bmatrix} \\[4pt]
+\nabla_b L &amp;= \nabla_a L &amp;&amp;= \begin{bmatrix} 0.73 \\ 0 \end{bmatrix}
+\end{aligned}
+$$</p>
+<p>Update (alpha = 1)
+$$
+\begin{aligned}
+W &amp;\leftarrow W - \alpha \nabla_W L &amp;&amp;= \begin{bmatrix} -1.16 &amp; -0.63 \\ \mathbf{-0.5} &amp; \mathbf{0.2} \end{bmatrix} \\[4pt]
+b &amp;\leftarrow b - \alpha \nabla_b L &amp;&amp;= \begin{bmatrix} -0.43 \\ \mathbf{-0.2} \end{bmatrix}
+\end{aligned}
+$$</p>
+<p>Recheck
+$$
+\begin{aligned}
+a_2 &amp;= Wx + b &amp;&amp;= \begin{bmatrix} -3.38 \\ -1 \end{bmatrix} \\[4pt]
+\Delta a &amp;&amp;&amp;= \begin{bmatrix} -4.38 \\ \mathbf{0} \end{bmatrix}
+\end{aligned}
+$$</p>
+<p>The second row hasn't changed, and is stuck at zero forever</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8725a4d1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="watch-for-softmax-saturation">watch for softmax saturation<a class="anchor-link" href="#watch-for-softmax-saturation">¶</a></h4>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5c7ab2a3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [36]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-julia"><pre><span></span><span class="n">println</span><span class="p">(</span><span class="n">round</span><span class="o">.</span><span class="p">(</span><span class="n">softmax_stable</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">round</span><span class="o">.</span><span class="p">(</span><span class="n">softmax_stable</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">]),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>[0.09, 0.245, 0.665]
+[0.0, 0.0, 1.0]
+</pre>
+</div>
 </div>
 </div>
 </div>

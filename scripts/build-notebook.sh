@@ -1,30 +1,46 @@
 #!/usr/bin/env bash
 #
-# Regenerate public/mnist.html from the notebook in the neural-nets repo.
+# Regenerate a themed public/<name>.html from a notebook in the neural-nets repo.
 #
-# Run this after editing mnist.ipynb, then redeploy. It cannot run in Vercel's
-# build container — that has no Jupyter and no Julia — so it stays a local step.
+# Run this after editing a notebook, then redeploy. It cannot run in Vercel's
+# build container (no Jupyter, no Julia), so it stays a local step.
 #
-#   ./scripts/build-notebook.sh [path/to/mnist.ipynb]
+#   ./scripts/build-notebook.sh                        # all notebooks in NOTEBOOKS
+#   ./scripts/build-notebook.sh path/to/foo.ipynb      # just that one -> public/foo.html
 
 set -euo pipefail
 
-NOTEBOOK="${1:-$HOME/neural-nets/mnist.ipynb}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OUT="$ROOT/public/mnist.html"
 THEME="$ROOT/scripts/notebook-theme.css"
 
-if [ ! -f "$NOTEBOOK" ]; then
-  echo "notebook not found: $NOTEBOOK" >&2
-  exit 1
-fi
+# Where the notebook repo is checked out. Sits beside the site by default;
+# override with NOTEBOOK_SRC=/some/path ./scripts/build-notebook.sh
+SRC="${NOTEBOOK_SRC:-$ROOT/../portfolio_source/neural-nets}"
 
-echo "converting $NOTEBOOK"
-jupyter nbconvert --to html --theme dark "$NOTEBOOK" \
-  --output-dir "$ROOT/public" --output mnist.html
+# Notebooks published on the site, built when no argument is given.
+NOTEBOOKS=(
+  "$SRC/mnist.ipynb"
+  "$SRC/layers.ipynb"
+  "$SRC/learnings.ipynb"
+)
 
-echo "injecting theme"
-THEME_CSS="$THEME" python3 - "$OUT" <<'PY'
+build() {
+  local notebook="$1"
+  local name out
+  name="$(basename "${notebook%.ipynb}")"
+  out="$ROOT/public/$name.html"
+
+  if [ ! -f "$notebook" ]; then
+    echo "notebook not found: $notebook" >&2
+    exit 1
+  fi
+
+  echo "converting $notebook"
+  jupyter nbconvert --to html --theme dark "$notebook" \
+    --output-dir "$ROOT/public" --output "$name.html"
+
+  echo "injecting theme"
+  THEME_CSS="$THEME" python3 - "$out" <<'PY'
 import os, sys
 
 path = sys.argv[1]
@@ -44,10 +60,19 @@ block = fonts + "<style>\n" + css + "\n</style>\n"
 
 # Inject last in <head> so the overrides win on source order.
 if "</head>" not in html:
-    sys.exit("no </head> in generated HTML — nbconvert template changed?")
+    sys.exit("no </head> in generated HTML; nbconvert template changed?")
 
 html = html.replace("</head>", block + "</head>", 1)
 open(path, "w").write(html)
 PY
 
-echo "wrote $OUT ($(wc -c <"$OUT" | tr -d ' ') bytes)"
+  echo "wrote $out ($(wc -c <"$out" | tr -d ' ') bytes)"
+}
+
+if [ $# -gt 0 ]; then
+  build "$1"
+else
+  for nb in "${NOTEBOOKS[@]}"; do
+    build "$nb"
+  done
+fi
