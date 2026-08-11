@@ -9,6 +9,14 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "k-nearest neighbours on Iris",
+    blurb:
+      "No training loop at all — just squared Euclidean distance and a majority vote over the five nearest neighbours. 96.7% test accuracy on Iris, with the four features plotted to show why it works.",
+    href: "/knn.html",
+    hrefLabel: "Read the notebook",
+    source: "https://github.com/glianx/knn",
+  },
+  {
     title: "Two-layer MNIST",
     blurb:
       "A two-layer network in Julia with the same hand-derived gradients. A ReLU hidden layer and He initialization take it from 90.91% to 96.95% test accuracy.",

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Regenerate a themed public/<name>.html from a notebook in the neural-nets repo.
+# Regenerate a themed public/<name>.html from a notebook in a source repo.
 #
 # Run this after editing a notebook, then redeploy. It cannot run in Vercel's
 # build container (no Jupyter, no Julia), so it stays a local step.
@@ -13,15 +13,19 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 THEME="$ROOT/scripts/notebook-theme.css"
 
-# Where the notebook repo is checked out. Sits beside the site by default;
-# override with NOTEBOOK_SRC=/some/path ./scripts/build-notebook.sh
-SRC="${NOTEBOOK_SRC:-$ROOT/../portfolio_source/neural-nets}"
+# Where the notebook repos are checked out, one directory per repo. Sits beside
+# the site by default; override with NOTEBOOK_SRC=/some/path ./scripts/build-notebook.sh
+SRC="${NOTEBOOK_SRC:-$ROOT/../portfolio_source}"
 
-# Notebooks published on the site, built when no argument is given.
+# Notebooks published on the site, built when no argument is given. The output
+# is named after the notebook, so two notebooks sharing a basename across repos
+# would overwrite each other in public/ — knn/learnings.ipynb is scratch and
+# deliberately not published for that reason.
 NOTEBOOKS=(
-  "$SRC/mnist.ipynb"
-  "$SRC/layers.ipynb"
-  "$SRC/learnings.ipynb"
+  "$SRC/neural-nets/mnist.ipynb"
+  "$SRC/neural-nets/layers.ipynb"
+  "$SRC/neural-nets/learnings.ipynb"
+  "$SRC/knn/knn.ipynb"
 )
 
 build() {
