@@ -26,6 +26,7 @@ NOTEBOOKS=(
   "$SRC/neural-nets/layers.ipynb"
   "$SRC/neural-nets/learnings.ipynb"
   "$SRC/knn/knn.ipynb"
+  "$SRC/ngram/ngram.ipynb"
 )
 
 build() {

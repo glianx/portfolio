@@ -9,6 +9,14 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "An n-gram language model",
+    blurb:
+      "Every three-word window in Frankenstein mapped to the words that followed it, then sampled one at a time. No libraries, no training — the whole model is a dictionary. n = 3 tracks the novel for a clause, then wanders off into it.",
+    href: "/ngram.html",
+    hrefLabel: "Read the notebook",
+    source: "https://github.com/glianx/ngram",
+  },
+  {
     title: "k-nearest neighbours on Iris",
     blurb:
       "No training loop at all — just squared Euclidean distance and a majority vote over the five nearest neighbours. 96.7% test accuracy on Iris, with the four features plotted to show why it works.",
