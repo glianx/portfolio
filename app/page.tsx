@@ -1,90 +1,49 @@
-type Project = {
-  title: string;
-  blurb: string;
+import Mail from "./mail";
+
+type Entry = {
+  slug: string;
   href: string;
-  hrefLabel: string;
-  source: string;
-  extra?: { href: string; label: string };
+  title: string;
 };
 
-const projects: Project[] = [
-  {
-    title: "An undercomplete autoencoder",
-    blurb:
-      "784 → 100 → 784 on FashionMNIST, with the MSE gradients derived by hand. The bottleneck is the whole idea: 100 units can't hold 784 pixels, so the network has to learn what the clothes have in common. Reconstructions are rendered every epoch.",
-    href: "/undercomplete.html",
-    hrefLabel: "Read the notebook",
-    source: "https://github.com/glianx/autoencoders",
-  },
-  {
-    title: "An n-gram language model",
-    blurb:
-      "Every three-word window in Frankenstein mapped to the words that followed it, then sampled one at a time. No libraries, no training — the whole model is a dictionary. n = 3 tracks the novel for a clause, then wanders off into it.",
-    href: "/ngram.html",
-    hrefLabel: "Read the notebook",
-    source: "https://github.com/glianx/ngram",
-  },
-  {
-    title: "k-nearest neighbours on Iris",
-    blurb:
-      "No training loop at all — just squared Euclidean distance and a majority vote over the five nearest neighbours. 96.7% test accuracy on Iris, with the four features plotted to show why it works.",
-    href: "/knn.html",
-    hrefLabel: "Read the notebook",
-    source: "https://github.com/glianx/knn",
-  },
-  {
-    title: "Two-layer MNIST",
-    blurb:
-      "A two-layer network in Julia with the same hand-derived gradients. A ReLU hidden layer and He initialization take it from 90.91% to 96.95% test accuracy.",
-    href: "/layers.html",
-    hrefLabel: "Read the notebook",
-    source: "https://github.com/glianx/neural-nets",
-    extra: { href: "/learnings.html", label: "What broke along the way" },
-  },
-  {
-    title: "MNIST from scratch",
-    blurb:
-      "A single-layer neural network written in Julia with hand-derived gradients, no autodiff and no ML framework. 90.91% test accuracy.",
-    href: "/mnist.html",
-    hrefLabel: "Read the notebook",
-    source: "https://github.com/glianx/neural-nets",
-  },
-  {
-    title: "How neural nets break",
-    blurb:
-      "Notes on the failure modes behind the two notebooks above: exploding activations from bad initialization, dead ReLU neurons that freeze the gradient at zero, and softmax saturation.",
-    href: "/learnings.html",
-    hrefLabel: "Read the notes",
-    source: "https://github.com/glianx/neural-nets",
-  },
+// The index reads as one run of monospace text, so each entry is just its
+// slug. Alphabetical — the order carries no ranking.
+const entries: Entry[] = [
+  { slug: "autoencoder", href: "/undercomplete.html", title: "Undercomplete autoencoder — 784 to 100 to 784 on FashionMNIST" },
+  { slug: "knn", href: "/knn.html", title: "k-nearest neighbours on Iris — no training loop, 96.7%" },
+  { slug: "mlp", href: "/layers.html", title: "Two-layer MNIST — ReLU hidden layer, He init, 96.95%" },
+  { slug: "mlp-failures", href: "/learnings.html", title: "How neural nets break — dead ReLUs, softmax saturation" },
+  { slug: "ngram", href: "/ngram.html", title: "An n-gram language model on Frankenstein" },
+  { slug: "softmax-regression", href: "/mnist.html", title: "MNIST from scratch — one layer, hand-derived gradients, 90.91%" },
 ];
 
 export default function Home() {
   return (
     <main>
-      <h1>Gordon Liang</h1>
-      <p className="intro">
-        I build things and write them up. Below is what I&rsquo;ve been working on.
-      </p>
+      <h1>gordon liang</h1>
 
-      <h2>Projects</h2>
-      <ul className="projects">
-        {projects.map((p) => (
-          <li key={p.title}>
-            <h3>{p.title}</h3>
-            <p>{p.blurb}</p>
-            <p className="links">
-              <a href={p.href}>{p.hrefLabel}</a>
-              {p.extra && <a href={p.extra.href}>{p.extra.label}</a>}
-              <a href={p.source}>Source</a>
-            </p>
-          </li>
-        ))}
-      </ul>
+      <div className="cloud-wrap">
+        <nav className="cloud" aria-label="Notebooks">
+          {entries.map((e, i) => (
+            <span key={e.slug}>
+              {/* Word and its trailing separator are one unwrappable unit,
+                  then a real space — so lines break after a dot, never
+                  before one. Adjacent JSX elements alone would give the line
+                  nowhere to wrap at all. */}
+              <span className="word">
+                <a href={e.href} title={e.title}>
+                  {e.slug}
+                </a>
+                {i < entries.length - 1 && <span className="sep">·</span>}
+              </span>{" "}
+            </span>
+          ))}
+        </nav>
+      </div>
 
       <footer>
-        <a href="https://github.com/glianx">GitHub</a>
-        <a href="mailto:gordon@liang.ca">gordon@liang.ca</a>
+        <a href="https://github.com/glianx">github</a>
+        <Mail />
       </footer>
     </main>
   );
