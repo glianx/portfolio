@@ -27,6 +27,7 @@ NOTEBOOKS=(
   "$SRC/neural-nets/learnings.ipynb"
   "$SRC/knn/knn.ipynb"
   "$SRC/ngram/ngram.ipynb"
+  "$SRC/autoencoders/undercomplete.ipynb"
 )
 
 build() {

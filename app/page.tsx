@@ -9,6 +9,14 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "An undercomplete autoencoder",
+    blurb:
+      "784 → 100 → 784 on FashionMNIST, with the MSE gradients derived by hand. The bottleneck is the whole idea: 100 units can't hold 784 pixels, so the network has to learn what the clothes have in common. Reconstructions are rendered every epoch.",
+    href: "/undercomplete.html",
+    hrefLabel: "Read the notebook",
+    source: "https://github.com/glianx/autoencoders",
+  },
+  {
     title: "An n-gram language model",
     blurb:
       "Every three-word window in Frankenstein mapped to the words that followed it, then sampled one at a time. No libraries, no training — the whole model is a dictionary. n = 3 tracks the novel for a clause, then wanders off into it.",
