@@ -2,24 +2,27 @@
 
 import { useEffect, useState } from "react";
 
-// The address never appears as a contiguous string in the served HTML — the
-// server renders "gordon at liang.ca" with no mailto: to match, and the real
-// link is assembled in the browser after hydration. Doing this in an inline
-// script instead would mutate the DOM before React hydrates, and React would
-// overwrite it on hydration.
+// The address is never displayed or served in a harvestable form. The visible
+// text is always the spelled-out version, and the real address exists only in
+// the mailto: href, assembled in the browser after hydration — so it is absent
+// from the served HTML entirely. Doing this in an inline script instead would
+// mutate the DOM before React hydrates, and React would overwrite it.
 const USER = "gordon";
-const HOST = "liang.ca";
+const HOST = "liang";
+const TLD = "ca";
+
+const DISPLAY = `${USER} [at] ${HOST} [dot] ${TLD}`;
 
 export default function Mail() {
   const [address, setAddress] = useState<string | null>(null);
 
   useEffect(() => {
-    setAddress(USER + String.fromCharCode(64) + HOST);
+    setAddress(`${USER}${String.fromCharCode(64)}${HOST}.${TLD}`);
   }, []);
 
   if (!address) {
-    return <span className="mail">{`${USER} at ${HOST}`}</span>;
+    return <span className="mail">{DISPLAY}</span>;
   }
 
-  return <a href={`mailto:${address}`}>{address}</a>;
+  return <a href={`mailto:${address}`}>{DISPLAY}</a>;
 }
