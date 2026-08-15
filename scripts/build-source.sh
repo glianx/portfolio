@@ -22,9 +22,7 @@ SOURCES=(
   "$SRC/hello-world/auth/bcrypt-jwt/server.ts	auth-jwt	Password hashing with bcrypt and JWT sessions"
   "$SRC/hello-world/express-sqlite-http-crud/server.js	express-crud	CRUD over HTTP with Express and SQLite"
   "$SRC/hello-world/fastapi/crud.py	fastapi	CRUD endpoints with FastAPI"
-  "$SRC/hello-world/http/explore.js	http-node	Poking at Node's http module"
   "$SRC/hello-world/http-py/small-server.py	http-py	A small HTTP server in Python"
-  "$SRC/hello-world/learn-cn/learn-clsx.mjs	learn-clsx	clsx for conditional class names"
   "$SRC/hello-world/learn-cva/hello_cva.mjs	learn-cva	Class variance authority, plain"
   "$SRC/hello-world/learn-cva-react/src/badge.ts	learn-cva-react	A badge's variants defined with cva"
   "$SRC/hello-world/learn-nextjs/app/nav/page.tsx	learn-nextjs	A Next.js page with a navigation menu"
@@ -37,12 +35,9 @@ SOURCES=(
   "$SRC/hello-world/openai-agents-ts/index.js	openai-agents-ts	Agents SDK in JavaScript"
   "$SRC/hello-world/pil-tesseract-image-ocr/run_ocr_lite.py	pil-ocr	OCR over page images with PIL and Tesseract"
   "$SRC/hello-world/probe/probe-server.py	probe	Probing a server's behaviour"
-  "$SRC/hello-world/proxy/squid.conf	proxy	A forward proxy with Squid"
   "$SRC/hello-world/reverse-proxy/server.mjs	reverse-proxy	A reverse proxy in Node"
   "$SRC/hello-world/sql/music.sql	sql	A music database in SQL"
   "$SRC/hello-world/tcp/server.js	tcp	A TCP server on raw sockets"
-  "$SRC/hello-world/tokens/main.py	tokens	Tokenizing text with tiktoken"
-  "$SRC/hello-world/tunnel-ngrok/index.html	ngrok	The page served through an ngrok tunnel"
 )
 
 build() {

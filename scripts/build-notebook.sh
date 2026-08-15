@@ -32,7 +32,6 @@ NOTEBOOKS=(
   "$SRC/attention/attention.ipynb"
   "$SRC/neuro/nernst.ipynb"
   "$SRC/neuro/i-v.ipynb"
-  "$SRC/cs371-explore/gradient_descent.ipynb"
   "$SRC/cs371-explore/softmax.ipynb"
   "$SRC/cs371-explore/softmax-K.ipynb"
   "$SRC/cs371-explore/linear_classifier.ipynb"
