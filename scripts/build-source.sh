@@ -17,6 +17,33 @@ SRC="${NOTEBOOK_SRC:-$ROOT/../portfolio_source}"
 # file<TAB>output name<TAB>page title
 SOURCES=(
   "$SRC/promises-from-scratch/myPromise/myPromise.js	mypromise	A Promise implementation from scratch"
+  "$SRC/hello-world/advanced-funcs/generator/count_to_three.py	advanced-funcs	Python generators — yield, send and closing"
+  "$SRC/hello-world/ai-sdk-python/llm.py	ai-sdk-python	Calling an LLM from Python"
+  "$SRC/hello-world/auth/bcrypt-jwt/server.ts	auth-jwt	Password hashing with bcrypt and JWT sessions"
+  "$SRC/hello-world/express-sqlite-http-crud/server.js	express-crud	CRUD over HTTP with Express and SQLite"
+  "$SRC/hello-world/fastapi/crud.py	fastapi	CRUD endpoints with FastAPI"
+  "$SRC/hello-world/http/explore.js	http-node	Poking at Node's http module"
+  "$SRC/hello-world/http-py/small-server.py	http-py	A small HTTP server in Python"
+  "$SRC/hello-world/learn-cn/learn-clsx.mjs	learn-clsx	clsx for conditional class names"
+  "$SRC/hello-world/learn-cva/hello_cva.mjs	learn-cva	Class variance authority, plain"
+  "$SRC/hello-world/learn-cva-react/src/badge.ts	learn-cva-react	A badge's variants defined with cva"
+  "$SRC/hello-world/learn-nextjs/app/nav/page.tsx	learn-nextjs	A Next.js page with a navigation menu"
+  "$SRC/hello-world/learn-slot/src/App.jsx	learn-slot	Radix Slot and asChild composition"
+  "$SRC/hello-world/learn_postgres/milli-pg.js	learn-postgres	Querying Postgres from Node"
+  "$SRC/hello-world/learn_shadcn/components/ui/button.tsx	learn-shadcn	The shadcn/ui button, variant by variant"
+  "$SRC/hello-world/local-llm/test/index.js	local-llm	Running a model locally in the browser"
+  "$SRC/hello-world/neon-nodejs/centi.js	neon	Neon serverless Postgres from Node"
+  "$SRC/hello-world/openai-agents-py/quickstart.py	openai-agents-py	Agents SDK quickstart in Python"
+  "$SRC/hello-world/openai-agents-ts/index.js	openai-agents-ts	Agents SDK in JavaScript"
+  "$SRC/hello-world/pil-tesseract-image-ocr/run_ocr_lite.py	pil-ocr	OCR over page images with PIL and Tesseract"
+  "$SRC/hello-world/probe/probe-server.py	probe	Probing a server's behaviour"
+  "$SRC/hello-world/proxy/squid.conf	proxy	A forward proxy with Squid"
+  "$SRC/hello-world/reverse-proxy/server.mjs	reverse-proxy	A reverse proxy in Node"
+  "$SRC/hello-world/sms/send-sms-oauth2.js	sms	Sending SMS over an OAuth2 API"
+  "$SRC/hello-world/sql/music.sql	sql	A music database in SQL"
+  "$SRC/hello-world/tcp/server.js	tcp	A TCP server on raw sockets"
+  "$SRC/hello-world/tokens/main.py	tokens	Tokenizing text with tiktoken"
+  "$SRC/hello-world/tunnel-ngrok/index.html	ngrok	The page served through an ngrok tunnel"
 )
 
 build() {
@@ -43,9 +70,11 @@ out = os.environ["SRC_OUT"]
 # every line number one off from the file.
 code = open(path).read().strip("\n")
 lexer = get_lexer_for_filename(path)
-# linenos in a separate table column so line numbers are not selectable
-# along with the code when a reader copies it.
-formatter = HtmlFormatter(style="native", linenos="table", cssclass="src")
+# Inline line numbers, not the table layout: the table puts the gutter in
+# its own <pre>, and the two columns drift out of alignment by a line. Inline
+# numbers live in the same <pre> as the code, so they cannot. CSS marks them
+# unselectable so copying the block does not pick them up.
+formatter = HtmlFormatter(style="nord-darker", linenos="inline", cssclass="src")
 
 body = highlight(code, lexer, formatter)
 rules = formatter.get_style_defs(".src")
@@ -82,7 +111,7 @@ if [ $# -gt 0 ]; then
   build "$1" "$(basename "${1%.*}" | tr '[:upper:]' '[:lower:]')" "${2:-$(basename "$1")}"
 else
   for entry in "${SOURCES[@]}"; do
-    IFS=$'\t' read -r file name title <<<"$entry"
+    IFS=$'	' read -r file name title <<<"$entry"
     build "$file" "$name" "$title"
   done
 fi

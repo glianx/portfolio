@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Next.js page with a navigation menu &mdash; Gordon Liang</title>
+    <link rel="stylesheet" href="/paper.css" />
+    <style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.src .hll { background-color: #3B4252 }
+.src { background: #242933; color: #D8DEE9 }
+.src .c { color: #616E87; font-style: italic } /* Comment */
+.src .err { color: #BF616A } /* Error */
+.src .esc { color: #D8DEE9 } /* Escape */
+.src .g { color: #D8DEE9 } /* Generic */
+.src .k { color: #81A1C1; font-weight: bold } /* Keyword */
+.src .l { color: #D8DEE9 } /* Literal */
+.src .n { color: #D8DEE9 } /* Name */
+.src .o { color: #81A1C1; font-weight: bold } /* Operator */
+.src .x { color: #D8DEE9 } /* Other */
+.src .p { color: #ECEFF4 } /* Punctuation */
+.src .ch { color: #616E87; font-style: italic } /* Comment.Hashbang */
+.src .cm { color: #616E87; font-style: italic } /* Comment.Multiline */
+.src .cp { color: #5E81AC; font-style: italic } /* Comment.Preproc */
+.src .cpf { color: #616E87; font-style: italic } /* Comment.PreprocFile */
+.src .c1 { color: #616E87; font-style: italic } /* Comment.Single */
+.src .cs { color: #616E87; font-style: italic } /* Comment.Special */
+.src .gd { color: #BF616A } /* Generic.Deleted */
+.src .ge { color: #D8DEE9; font-style: italic } /* Generic.Emph */
+.src .ges { color: #D8DEE9 } /* Generic.EmphStrong */
+.src .gr { color: #BF616A } /* Generic.Error */
+.src .gh { color: #88C0D0; font-weight: bold } /* Generic.Heading */
+.src .gi { color: #A3BE8C } /* Generic.Inserted */
+.src .go { color: #D8DEE9 } /* Generic.Output */
+.src .gp { color: #616E88; font-weight: bold } /* Generic.Prompt */
+.src .gs { color: #D8DEE9; font-weight: bold } /* Generic.Strong */
+.src .gu { color: #88C0D0; font-weight: bold } /* Generic.Subheading */
+.src .gt { color: #BF616A } /* Generic.Traceback */
+.src .kc { color: #81A1C1; font-weight: bold } /* Keyword.Constant */
+.src .kd { color: #81A1C1; font-weight: bold } /* Keyword.Declaration */
+.src .kn { color: #81A1C1; font-weight: bold } /* Keyword.Namespace */
+.src .kp { color: #81A1C1 } /* Keyword.Pseudo */
+.src .kr { color: #81A1C1; font-weight: bold } /* Keyword.Reserved */
+.src .kt { color: #81A1C1 } /* Keyword.Type */
+.src .ld { color: #D8DEE9 } /* Literal.Date */
+.src .m { color: #B48EAD } /* Literal.Number */
+.src .s { color: #A3BE8C } /* Literal.String */
+.src .na { color: #8FBCBB } /* Name.Attribute */
+.src .nb { color: #81A1C1 } /* Name.Builtin */
+.src .nc { color: #8FBCBB } /* Name.Class */
+.src .no { color: #8FBCBB } /* Name.Constant */
+.src .nd { color: #D08770 } /* Name.Decorator */
+.src .ni { color: #D08770 } /* Name.Entity */
+.src .ne { color: #BF616A } /* Name.Exception */
+.src .nf { color: #88C0D0 } /* Name.Function */
+.src .nl { color: #D8DEE9 } /* Name.Label */
+.src .nn { color: #8FBCBB } /* Name.Namespace */
+.src .nx { color: #D8DEE9 } /* Name.Other */
+.src .py { color: #D8DEE9 } /* Name.Property */
+.src .nt { color: #81A1C1 } /* Name.Tag */
+.src .nv { color: #D8DEE9 } /* Name.Variable */
+.src .ow { color: #81A1C1; font-weight: bold } /* Operator.Word */
+.src .pm { color: #ECEFF4 } /* Punctuation.Marker */
+.src .w { color: #D8DEE9 } /* Text.Whitespace */
+.src .mb { color: #B48EAD } /* Literal.Number.Bin */
+.src .mf { color: #B48EAD } /* Literal.Number.Float */
+.src .mh { color: #B48EAD } /* Literal.Number.Hex */
+.src .mi { color: #B48EAD } /* Literal.Number.Integer */
+.src .mo { color: #B48EAD } /* Literal.Number.Oct */
+.src .sa { color: #A3BE8C } /* Literal.String.Affix */
+.src .sb { color: #A3BE8C } /* Literal.String.Backtick */
+.src .sc { color: #A3BE8C } /* Literal.String.Char */
+.src .dl { color: #A3BE8C } /* Literal.String.Delimiter */
+.src .sd { color: #616E87 } /* Literal.String.Doc */
+.src .s2 { color: #A3BE8C } /* Literal.String.Double */
+.src .se { color: #EBCB8B } /* Literal.String.Escape */
+.src .sh { color: #A3BE8C } /* Literal.String.Heredoc */
+.src .si { color: #A3BE8C } /* Literal.String.Interpol */
+.src .sx { color: #A3BE8C } /* Literal.String.Other */
+.src .sr { color: #EBCB8B } /* Literal.String.Regex */
+.src .s1 { color: #A3BE8C } /* Literal.String.Single */
+.src .ss { color: #A3BE8C } /* Literal.String.Symbol */
+.src .bp { color: #81A1C1 } /* Name.Builtin.Pseudo */
+.src .fm { color: #88C0D0 } /* Name.Function.Magic */
+.src .vc { color: #D8DEE9 } /* Name.Variable.Class */
+.src .vg { color: #D8DEE9 } /* Name.Variable.Global */
+.src .vi { color: #D8DEE9 } /* Name.Variable.Instance */
+.src .vm { color: #D8DEE9 } /* Name.Variable.Magic */
+.src .il { color: #B48EAD } /* Literal.Number.Integer.Long */
+    </style>
+  </head>
+  <body>
+    <article class="wide">
+      <a class="back" href="/">&larr; index</a>
+      <h1>A Next.js page with a navigation menu</h1>
+      <p class="meta">page.tsx &middot;
+        216 lines</p>
+      <div class="src"><pre><span></span><span class="linenos">  1</span><span class="s2">&quot;use client&quot;</span>
+<span class="linenos">  2</span>
+<span class="linenos">  3</span><span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;react&quot;</span>
+<span class="linenos">  4</span><span class="k">import</span><span class="w"> </span><span class="nx">Link</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;next/link&quot;</span>
+<span class="linenos">  5</span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">CircleCheckIcon</span><span class="p">,</span><span class="w"> </span><span class="nx">CircleHelpIcon</span><span class="p">,</span><span class="w"> </span><span class="nx">CircleIcon</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;lucide-react&quot;</span>
+<span class="linenos">  6</span>
+<span class="linenos">  7</span><span class="c1">// import { useIsMobile } from &quot;@/hooks/use-mobile&quot;</span>
+<span class="linenos">  8</span><span class="k">import</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">  9</span><span class="w">  </span><span class="nx">NavigationMenu</span><span class="p">,</span>
+<span class="linenos"> 10</span><span class="w">  </span><span class="nx">NavigationMenuContent</span><span class="p">,</span>
+<span class="linenos"> 11</span><span class="w">  </span><span class="nx">NavigationMenuItem</span><span class="p">,</span>
+<span class="linenos"> 12</span><span class="w">  </span><span class="nx">NavigationMenuLink</span><span class="p">,</span>
+<span class="linenos"> 13</span><span class="w">  </span><span class="nx">NavigationMenuList</span><span class="p">,</span>
+<span class="linenos"> 14</span><span class="w">  </span><span class="nx">NavigationMenuTrigger</span><span class="p">,</span>
+<span class="linenos"> 15</span><span class="w">  </span><span class="nx">navigationMenuTriggerStyle</span><span class="p">,</span>
+<span class="linenos"> 16</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@/components/ui/navigation-menu&quot;</span>
+<span class="linenos"> 17</span>
+<span class="linenos"> 18</span><span class="kd">const</span><span class="w"> </span><span class="nx">components</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 19</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 20</span><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Alert Dialog&quot;</span><span class="p">,</span>
+<span class="linenos"> 21</span><span class="w">    </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/docs/primitives/alert-dialog&quot;</span><span class="p">,</span>
+<span class="linenos"> 22</span><span class="w">    </span><span class="nx">description</span><span class="o">:</span>
+<span class="linenos"> 23</span><span class="w">      </span><span class="s2">&quot;A modal dialog that interrupts the user with important content and expects a response.&quot;</span><span class="p">,</span>
+<span class="linenos"> 24</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 25</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 26</span><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Hover Card&quot;</span><span class="p">,</span>
+<span class="linenos"> 27</span><span class="w">    </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/docs/primitives/hover-card&quot;</span><span class="p">,</span>
+<span class="linenos"> 28</span><span class="w">    </span><span class="nx">description</span><span class="o">:</span>
+<span class="linenos"> 29</span><span class="w">      </span><span class="s2">&quot;For sighted users to preview content available behind a link.&quot;</span><span class="p">,</span>
+<span class="linenos"> 30</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 31</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 32</span><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Progress&quot;</span><span class="p">,</span>
+<span class="linenos"> 33</span><span class="w">    </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/docs/primitives/progress&quot;</span><span class="p">,</span>
+<span class="linenos"> 34</span><span class="w">    </span><span class="nx">description</span><span class="o">:</span>
+<span class="linenos"> 35</span><span class="w">      </span><span class="s2">&quot;Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.&quot;</span><span class="p">,</span>
+<span class="linenos"> 36</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 37</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 38</span><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Scroll-area&quot;</span><span class="p">,</span>
+<span class="linenos"> 39</span><span class="w">    </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/docs/primitives/scroll-area&quot;</span><span class="p">,</span>
+<span class="linenos"> 40</span><span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Visually or semantically separates content.&quot;</span><span class="p">,</span>
+<span class="linenos"> 41</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 42</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 43</span><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Tabs&quot;</span><span class="p">,</span>
+<span class="linenos"> 44</span><span class="w">    </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/docs/primitives/tabs&quot;</span><span class="p">,</span>
+<span class="linenos"> 45</span><span class="w">    </span><span class="nx">description</span><span class="o">:</span>
+<span class="linenos"> 46</span><span class="w">      </span><span class="s2">&quot;A set of layered sections of content—known as tab panels—that are displayed one at a time.&quot;</span><span class="p">,</span>
+<span class="linenos"> 47</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 48</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 49</span><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Tooltip&quot;</span><span class="p">,</span>
+<span class="linenos"> 50</span><span class="w">    </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/docs/primitives/tooltip&quot;</span><span class="p">,</span>
+<span class="linenos"> 51</span><span class="w">    </span><span class="nx">description</span><span class="o">:</span>
+<span class="linenos"> 52</span><span class="w">      </span><span class="s2">&quot;A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.&quot;</span><span class="p">,</span>
+<span class="linenos"> 53</span><span class="w">  </span><span class="p">},</span>
+<span class="linenos"> 54</span><span class="p">]</span>
+<span class="linenos"> 55</span>
+<span class="linenos"> 56</span><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">NavigationMenuDemo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 57</span><span class="c1">//   const isMobile = useIsMobile()</span>
+<span class="linenos"> 58</span><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">isMobile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="linenos"> 59</span>
+<span class="linenos"> 60</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos"> 61</span><span class="w">    </span><span class="p">&lt;</span><span class="nt">NavigationMenu</span><span class="w"> </span><span class="na">viewport</span><span class="o">=</span><span class="p">{</span><span class="nx">isMobile</span><span class="p">}&gt;</span>
+<span class="linenos"> 62</span><span class="w">      </span><span class="p">&lt;</span><span class="nt">NavigationMenuList</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;flex-wrap&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 63</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos"> 64</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span><span class="nx">Home</span><span class="p">&lt;/</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span>
+<span class="linenos"> 65</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos"> 66</span><span class="w">            </span><span class="p">&lt;</span><span class="nt">ul</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 67</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;row-span-3&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 68</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos"> 69</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">a</span>
+<span class="linenos"> 70</span><span class="w">                    </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden transition-all duration-200 select-none focus:shadow-md md:p-6&quot;</span>
+<span class="linenos"> 71</span><span class="w">                    </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;/&quot;</span>
+<span class="linenos"> 72</span><span class="w">                  </span><span class="p">&gt;</span>
+<span class="linenos"> 73</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;mb-2 text-lg font-medium sm:mt-4&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 74</span><span class="w">                      </span><span class="nx">shadcn</span><span class="o">/</span><span class="nx">ui</span>
+<span class="linenos"> 75</span><span class="w">                    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos"> 76</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">p</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;text-muted-foreground text-sm leading-tight&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 77</span><span class="w">                      </span><span class="nx">Beautifully</span><span class="w"> </span><span class="nx">designed</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="nx">built</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="nx">Tailwind</span><span class="w"> </span><span class="nx">CSS</span><span class="p">.</span>
+<span class="linenos"> 78</span><span class="w">                    </span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="linenos"> 79</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="linenos"> 80</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos"> 81</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos"> 82</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">ListItem</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;/docs&quot;</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Introduction&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 83</span><span class="w">                </span><span class="nx">Re</span><span class="o">-</span><span class="nx">usable</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="nx">built</span><span class="w"> </span><span class="nx">using</span><span class="w"> </span><span class="nx">Radix</span><span class="w"> </span><span class="nx">UI</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">Tailwind</span><span class="w"> </span><span class="nx">CSS</span><span class="p">.</span>
+<span class="linenos"> 84</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">ListItem</span><span class="p">&gt;</span>
+<span class="linenos"> 85</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">ListItem</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;/docs/installation&quot;</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Installation&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 86</span><span class="w">                </span><span class="nx">How</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nx">dependencies</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">structure</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">app</span><span class="p">.</span>
+<span class="linenos"> 87</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">ListItem</span><span class="p">&gt;</span>
+<span class="linenos"> 88</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">ListItem</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;/docs/primitives/typography&quot;</span><span class="w"> </span><span class="na">title</span><span class="o">=</span><span class="s">&quot;Typography&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 89</span><span class="w">                </span><span class="nx">Styles</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">headings</span><span class="p">,</span><span class="w"> </span><span class="nx">paragraphs</span><span class="p">,</span><span class="w"> </span><span class="nx">lists</span><span class="p">...</span><span class="nx">etc</span>
+<span class="linenos"> 90</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">ListItem</span><span class="p">&gt;</span>
+<span class="linenos"> 91</span><span class="w">            </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="linenos"> 92</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos"> 93</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos"> 94</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos"> 95</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span><span class="nx">Components</span><span class="p">&lt;/</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span>
+<span class="linenos"> 96</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos"> 97</span><span class="w">            </span><span class="p">&lt;</span><span class="nt">ul</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]&quot;</span><span class="p">&gt;</span>
+<span class="linenos"> 98</span><span class="w">              </span><span class="p">{</span><span class="nx">components</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">component</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos"> 99</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">ListItem</span>
+<span class="linenos">100</span><span class="w">                  </span><span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">component</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span>
+<span class="linenos">101</span><span class="w">                  </span><span class="na">title</span><span class="o">=</span><span class="p">{</span><span class="nx">component</span><span class="p">.</span><span class="nx">title</span><span class="p">}</span>
+<span class="linenos">102</span><span class="w">                  </span><span class="na">href</span><span class="o">=</span><span class="p">{</span><span class="nx">component</span><span class="p">.</span><span class="nx">href</span><span class="p">}</span>
+<span class="linenos">103</span><span class="w">                </span><span class="p">&gt;</span>
+<span class="linenos">104</span><span class="w">                  </span><span class="p">{</span><span class="nx">component</span><span class="p">.</span><span class="nx">description</span><span class="p">}</span>
+<span class="linenos">105</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">ListItem</span><span class="p">&gt;</span>
+<span class="linenos">106</span><span class="w">              </span><span class="p">))}</span>
+<span class="linenos">107</span><span class="w">            </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="linenos">108</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">109</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos">110</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos">111</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="p">{</span><span class="nx">navigationMenuTriggerStyle</span><span class="p">()}&gt;</span>
+<span class="linenos">112</span><span class="w">            </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;/docs&quot;</span><span class="p">&gt;</span><span class="nx">Docs</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">113</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">114</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos">115</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">NavigationMenuItem</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;hidden md:block&quot;</span><span class="p">&gt;</span>
+<span class="linenos">116</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span><span class="nx">List</span><span class="p">&lt;/</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span>
+<span class="linenos">117</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">118</span><span class="w">            </span><span class="p">&lt;</span><span class="nt">ul</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;grid w-[300px] gap-4&quot;</span><span class="p">&gt;</span>
+<span class="linenos">119</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">120</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">121</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
+<span class="linenos">122</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span><span class="nx">Components</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">123</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;text-muted-foreground&quot;</span><span class="p">&gt;</span>
+<span class="linenos">124</span><span class="w">                      </span><span class="nx">Browse</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">library</span><span class="p">.</span>
+<span class="linenos">125</span><span class="w">                    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">126</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">127</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">128</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">129</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
+<span class="linenos">130</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span><span class="nx">Documentation</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">131</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;text-muted-foreground&quot;</span><span class="p">&gt;</span>
+<span class="linenos">132</span><span class="w">                      </span><span class="nx">Learn</span><span class="w"> </span><span class="nx">how</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">library</span><span class="p">.</span>
+<span class="linenos">133</span><span class="w">                    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">134</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">135</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">136</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">137</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
+<span class="linenos">138</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;font-medium&quot;</span><span class="p">&gt;</span><span class="nx">Blog</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">139</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;text-muted-foreground&quot;</span><span class="p">&gt;</span>
+<span class="linenos">140</span><span class="w">                      </span><span class="nx">Read</span><span class="w"> </span><span class="nx">our</span><span class="w"> </span><span class="nx">latest</span><span class="w"> </span><span class="nx">blog</span><span class="w"> </span><span class="nx">posts</span><span class="p">.</span>
+<span class="linenos">141</span><span class="w">                    </span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">142</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">143</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">144</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">145</span><span class="w">            </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="linenos">146</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">147</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos">148</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">NavigationMenuItem</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;hidden md:block&quot;</span><span class="p">&gt;</span>
+<span class="linenos">149</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span><span class="nx">Simple</span><span class="p">&lt;/</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span>
+<span class="linenos">150</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">151</span><span class="w">            </span><span class="p">&lt;</span><span class="nt">ul</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;grid w-[200px] gap-4&quot;</span><span class="p">&gt;</span>
+<span class="linenos">152</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">153</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">154</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span><span class="nx">Components</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">155</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">156</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">157</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span><span class="nx">Documentation</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">158</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">159</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">160</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span><span class="nx">Blocks</span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">161</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">162</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">163</span><span class="w">            </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="linenos">164</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">165</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos">166</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">NavigationMenuItem</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;hidden md:block&quot;</span><span class="p">&gt;</span>
+<span class="linenos">167</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span><span class="nx">With</span><span class="w"> </span><span class="nx">Icon</span><span class="p">&lt;/</span><span class="nt">NavigationMenuTrigger</span><span class="p">&gt;</span>
+<span class="linenos">168</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">169</span><span class="w">            </span><span class="p">&lt;</span><span class="nt">ul</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;grid w-[200px] gap-4&quot;</span><span class="p">&gt;</span>
+<span class="linenos">170</span><span class="w">              </span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">171</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">172</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;flex-row items-center gap-2&quot;</span><span class="p">&gt;</span>
+<span class="linenos">173</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">CircleHelpIcon</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="linenos">174</span><span class="w">                    </span><span class="nx">Backlog</span>
+<span class="linenos">175</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">176</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">177</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">178</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;flex-row items-center gap-2&quot;</span><span class="p">&gt;</span>
+<span class="linenos">179</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">CircleIcon</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="linenos">180</span><span class="w">                    </span><span class="nx">To</span><span class="w"> </span><span class="nx">Do</span>
+<span class="linenos">181</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">182</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">183</span><span class="w">                </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">184</span><span class="w">                  </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;flex-row items-center gap-2&quot;</span><span class="p">&gt;</span>
+<span class="linenos">185</span><span class="w">                    </span><span class="p">&lt;</span><span class="nt">CircleCheckIcon</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="linenos">186</span><span class="w">                    </span><span class="nx">Done</span>
+<span class="linenos">187</span><span class="w">                  </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">188</span><span class="w">                </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">189</span><span class="w">              </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">190</span><span class="w">            </span><span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="linenos">191</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">NavigationMenuContent</span><span class="p">&gt;</span>
+<span class="linenos">192</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">NavigationMenuItem</span><span class="p">&gt;</span>
+<span class="linenos">193</span><span class="w">      </span><span class="p">&lt;/</span><span class="nt">NavigationMenuList</span><span class="p">&gt;</span>
+<span class="linenos">194</span><span class="w">    </span><span class="p">&lt;/</span><span class="nt">NavigationMenu</span><span class="p">&gt;</span>
+<span class="linenos">195</span><span class="w">  </span><span class="p">)</span>
+<span class="linenos">196</span><span class="p">}</span>
+<span class="linenos">197</span>
+<span class="linenos">198</span><span class="kd">function</span><span class="w"> </span><span class="nx">ListItem</span><span class="p">({</span>
+<span class="linenos">199</span><span class="w">  </span><span class="nx">title</span><span class="p">,</span>
+<span class="linenos">200</span><span class="w">  </span><span class="nx">children</span><span class="p">,</span>
+<span class="linenos">201</span><span class="w">  </span><span class="nx">href</span><span class="p">,</span>
+<span class="linenos">202</span><span class="w">  </span><span class="p">...</span><span class="nx">props</span>
+<span class="linenos">203</span><span class="p">}</span><span class="o">:</span><span class="w"> </span><span class="nx">React</span><span class="p">.</span><span class="nx">ComponentPropsWithoutRef</span><span class="o">&lt;</span><span class="s2">&quot;li&quot;</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">href</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">204</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="linenos">205</span><span class="w">    </span><span class="p">&lt;</span><span class="nt">li</span><span class="w"> </span><span class="p">{</span><span class="na">...props</span><span class="p">}&gt;</span>
+<span class="linenos">206</span><span class="w">      </span><span class="p">&lt;</span><span class="nt">NavigationMenuLink</span><span class="w"> </span><span class="na">asChild</span><span class="p">&gt;</span>
+<span class="linenos">207</span><span class="w">        </span><span class="p">&lt;</span><span class="nt">Link</span><span class="w"> </span><span class="na">href</span><span class="o">=</span><span class="p">{</span><span class="nx">href</span><span class="p">}&gt;</span>
+<span class="linenos">208</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">div</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;text-sm leading-none font-medium&quot;</span><span class="p">&gt;{</span><span class="nx">title</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="linenos">209</span><span class="w">          </span><span class="p">&lt;</span><span class="nt">p</span><span class="w"> </span><span class="na">className</span><span class="o">=</span><span class="s">&quot;text-muted-foreground line-clamp-2 text-sm leading-snug&quot;</span><span class="p">&gt;</span>
+<span class="linenos">210</span><span class="w">            </span><span class="p">{</span><span class="nx">children</span><span class="p">}</span>
+<span class="linenos">211</span><span class="w">          </span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="linenos">212</span><span class="w">        </span><span class="p">&lt;/</span><span class="nt">Link</span><span class="p">&gt;</span>
+<span class="linenos">213</span><span class="w">      </span><span class="p">&lt;/</span><span class="nt">NavigationMenuLink</span><span class="p">&gt;</span>
+<span class="linenos">214</span><span class="w">    </span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="linenos">215</span><span class="w">  </span><span class="p">)</span>
+<span class="linenos">216</span><span class="p">}</span>
+</pre></div>
+
+    </article>
+  </body>
+</html>

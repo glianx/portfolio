@@ -1,4 +1,10 @@
+import { Space_Mono } from "next/font/google";
+
 import Mail from "./mail";
+
+// A second face for the web dev index, so the two sections read as
+// different bodies of work at a glance rather than one long list.
+const webFont = Space_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
 type Entry = {
   slug: string;
@@ -33,29 +39,78 @@ const entries: Entry[] = [
   { slug: "softmax-regression", href: "/mnist.html", title: "MNIST from scratch — one layer, hand-derived gradients, 90.91%" },
 ];
 
+// One key file from each folder of glianx/hello-world — the scratch repo
+// where each subfolder is a thing I sat down to learn.
+const webEntries: Entry[] = [
+  { slug: "advanced-funcs", href: "/advanced-funcs.html", title: "Python generators — yield, send and closing" },
+  { slug: "ai-sdk-python", href: "/ai-sdk-python.html", title: "Calling an LLM from Python" },
+  { slug: "auth-jwt", href: "/auth-jwt.html", title: "Password hashing with bcrypt and JWT sessions" },
+  { slug: "express-crud", href: "/express-crud.html", title: "CRUD over HTTP with Express and SQLite" },
+  { slug: "fastapi", href: "/fastapi.html", title: "CRUD endpoints with FastAPI" },
+  { slug: "http-node", href: "/http-node.html", title: "Poking at Node's http module" },
+  { slug: "http-py", href: "/http-py.html", title: "A small HTTP server in Python" },
+  { slug: "learn-clsx", href: "/learn-clsx.html", title: "clsx for conditional class names" },
+  { slug: "learn-cva", href: "/learn-cva.html", title: "Class variance authority, plain" },
+  { slug: "learn-cva-react", href: "/learn-cva-react.html", title: "A badge's variants defined with cva" },
+  { slug: "learn-nextjs", href: "/learn-nextjs.html", title: "A Next.js page with a navigation menu" },
+  { slug: "learn-postgres", href: "/learn-postgres.html", title: "Querying Postgres from Node" },
+  { slug: "learn-shadcn", href: "/learn-shadcn.html", title: "The shadcn/ui button, variant by variant" },
+  { slug: "learn-slot", href: "/learn-slot.html", title: "Radix Slot and asChild composition" },
+  { slug: "local-llm", href: "/local-llm.html", title: "Running a model locally in the browser" },
+  { slug: "neon", href: "/neon.html", title: "Neon serverless Postgres from Node" },
+  { slug: "ngrok", href: "/ngrok.html", title: "The page served through an ngrok tunnel" },
+  { slug: "openai-agents-py", href: "/openai-agents-py.html", title: "Agents SDK quickstart in Python" },
+  { slug: "openai-agents-ts", href: "/openai-agents-ts.html", title: "Agents SDK in JavaScript" },
+  { slug: "pil-ocr", href: "/pil-ocr.html", title: "OCR over page images with PIL and Tesseract" },
+  { slug: "probe", href: "/probe.html", title: "Probing a server's behaviour" },
+  { slug: "proxy", href: "/proxy.html", title: "A forward proxy with Squid" },
+  { slug: "reverse-proxy", href: "/reverse-proxy.html", title: "A reverse proxy in Node" },
+  { slug: "sms", href: "/sms.html", title: "Sending SMS over an OAuth2 API" },
+  { slug: "sql", href: "/sql.html", title: "A music database in SQL" },
+  { slug: "tcp", href: "/tcp.html", title: "A TCP server on raw sockets" },
+  { slug: "tokens", href: "/tokens.html", title: "Tokenizing text with tiktoken" },
+];
+
+function Cloud({
+  items,
+  label,
+  className = "",
+}: {
+  items: Entry[];
+  label: string;
+  className?: string;
+}) {
+  return (
+    <nav className={`cloud ${className}`} aria-label={label}>
+      {items.map((e, i) => (
+        <span key={e.slug}>
+          {/* Word and its trailing separator are one unwrappable unit, then a
+              real space — so lines break after a dot, never before one.
+              Adjacent JSX elements alone would give the line nowhere to wrap
+              at all. */}
+          <span className="word">
+            <a href={e.href} title={e.title}>
+              {e.slug}
+            </a>
+            {i < items.length - 1 && <span className="sep">·</span>}
+          </span>{" "}
+        </span>
+      ))}
+    </nav>
+  );
+}
+
 export default function Home() {
   return (
     <main>
       <h1>gordon liang</h1>
 
       <div className="cloud-wrap">
-        <nav className="cloud" aria-label="Notebooks">
-          {entries.map((e, i) => (
-            <span key={e.slug}>
-              {/* Word and its trailing separator are one unwrappable unit,
-                  then a real space — so lines break after a dot, never
-                  before one. Adjacent JSX elements alone would give the line
-                  nowhere to wrap at all. */}
-              <span className="word">
-                <a href={e.href} title={e.title}>
-                  {e.slug}
-                </a>
-                {i < entries.length - 1 && <span className="sep">·</span>}
-              </span>{" "}
-            </span>
-          ))}
-        </nav>
+        <Cloud items={entries} label="Notebooks" />
       </div>
+
+      <h2 className={webFont.className}>web dev</h2>
+      <Cloud items={webEntries} label="Web development" className={webFont.className} />
 
       <footer>
         <a href="https://github.com/glianx">github</a>

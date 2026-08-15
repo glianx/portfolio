@@ -76,6 +76,21 @@ main {
   align-items: center;
 }
 
+/* Section heading for the second index. Sized off the smaller web dev type
+   so it reads as a label on that block, not a peer of the name. */
+h2 {
+  margin: clamp(2rem, 5vh, 3.5rem) 0 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+h2::before {
+  content: "// ";
+}
+
 h1 {
   margin: 0 0 0.75rem;
   font-size: 0.95rem;
@@ -112,6 +127,14 @@ h1 {
 
 /* Back-to-back words need a separator that reads as punctuation, not as a
    link — and it carries the whitespace the line wraps on. */
+/* The web dev index carries more entries of smaller consequence, so it sits
+   a step down in size from the main one. */
+.cloud + .cloud,
+h2 + .cloud {
+  font-size: clamp(0.85rem, 2vw, 1.35rem);
+  letter-spacing: 0;
+}
+
 .word {
   white-space: nowrap;
 }

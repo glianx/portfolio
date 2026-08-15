@@ -169,33 +169,17 @@ article.wide {
   font-size: inherit;
 }
 
-/* The prose tables above right-align their numeric cells; code must not
-   inherit that, and neither column may be styled as a first-column label. */
-.src td,
-.src th,
-.src td:first-child {
-  padding: 0;
-  border: 0;
-  text-align: left;
-  vertical-align: top;
-}
-
+/* Inline line numbers: same <pre> as the code, so they stay aligned by
+   construction. Unselectable so copying the listing yields just the code. */
 .src .linenos {
-  padding: 1rem 0.75rem 1rem 1rem;
-  color: var(--muted);
-  text-align: right;
+  color: #4c566a;
   user-select: none;
-  white-space: nowrap;
-  width: 1%;
-}
-
-.src .code {
-  padding: 1rem 1rem 1rem 0.25rem;
-  width: 100%;
+  -webkit-user-select: none;
 }
 
 .src pre {
   margin: 0;
+  padding: 1rem 1.25rem;
   background: none;
 }
 

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Neon serverless Postgres from Node &mdash; Gordon Liang</title>
+    <link rel="stylesheet" href="/paper.css" />
+    <style>
+pre { line-height: 125%; }
+td.linenos .normal { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #D8DEE9; background-color: #242933; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #242933; background-color: #D8DEE9; padding-left: 5px; padding-right: 5px; }
+.src .hll { background-color: #3B4252 }
+.src { background: #242933; color: #D8DEE9 }
+.src .c { color: #616E87; font-style: italic } /* Comment */
+.src .err { color: #BF616A } /* Error */
+.src .esc { color: #D8DEE9 } /* Escape */
+.src .g { color: #D8DEE9 } /* Generic */
+.src .k { color: #81A1C1; font-weight: bold } /* Keyword */
+.src .l { color: #D8DEE9 } /* Literal */
+.src .n { color: #D8DEE9 } /* Name */
+.src .o { color: #81A1C1; font-weight: bold } /* Operator */
+.src .x { color: #D8DEE9 } /* Other */
+.src .p { color: #ECEFF4 } /* Punctuation */
+.src .ch { color: #616E87; font-style: italic } /* Comment.Hashbang */
+.src .cm { color: #616E87; font-style: italic } /* Comment.Multiline */
+.src .cp { color: #5E81AC; font-style: italic } /* Comment.Preproc */
+.src .cpf { color: #616E87; font-style: italic } /* Comment.PreprocFile */
+.src .c1 { color: #616E87; font-style: italic } /* Comment.Single */
+.src .cs { color: #616E87; font-style: italic } /* Comment.Special */
+.src .gd { color: #BF616A } /* Generic.Deleted */
+.src .ge { color: #D8DEE9; font-style: italic } /* Generic.Emph */
+.src .ges { color: #D8DEE9 } /* Generic.EmphStrong */
+.src .gr { color: #BF616A } /* Generic.Error */
+.src .gh { color: #88C0D0; font-weight: bold } /* Generic.Heading */
+.src .gi { color: #A3BE8C } /* Generic.Inserted */
+.src .go { color: #D8DEE9 } /* Generic.Output */
+.src .gp { color: #616E88; font-weight: bold } /* Generic.Prompt */
+.src .gs { color: #D8DEE9; font-weight: bold } /* Generic.Strong */
+.src .gu { color: #88C0D0; font-weight: bold } /* Generic.Subheading */
+.src .gt { color: #BF616A } /* Generic.Traceback */
+.src .kc { color: #81A1C1; font-weight: bold } /* Keyword.Constant */
+.src .kd { color: #81A1C1; font-weight: bold } /* Keyword.Declaration */
+.src .kn { color: #81A1C1; font-weight: bold } /* Keyword.Namespace */
+.src .kp { color: #81A1C1 } /* Keyword.Pseudo */
+.src .kr { color: #81A1C1; font-weight: bold } /* Keyword.Reserved */
+.src .kt { color: #81A1C1 } /* Keyword.Type */
+.src .ld { color: #D8DEE9 } /* Literal.Date */
+.src .m { color: #B48EAD } /* Literal.Number */
+.src .s { color: #A3BE8C } /* Literal.String */
+.src .na { color: #8FBCBB } /* Name.Attribute */
+.src .nb { color: #81A1C1 } /* Name.Builtin */
+.src .nc { color: #8FBCBB } /* Name.Class */
+.src .no { color: #8FBCBB } /* Name.Constant */
+.src .nd { color: #D08770 } /* Name.Decorator */
+.src .ni { color: #D08770 } /* Name.Entity */
+.src .ne { color: #BF616A } /* Name.Exception */
+.src .nf { color: #88C0D0 } /* Name.Function */
+.src .nl { color: #D8DEE9 } /* Name.Label */
+.src .nn { color: #8FBCBB } /* Name.Namespace */
+.src .nx { color: #D8DEE9 } /* Name.Other */
+.src .py { color: #D8DEE9 } /* Name.Property */
+.src .nt { color: #81A1C1 } /* Name.Tag */
+.src .nv { color: #D8DEE9 } /* Name.Variable */
+.src .ow { color: #81A1C1; font-weight: bold } /* Operator.Word */
+.src .pm { color: #ECEFF4 } /* Punctuation.Marker */
+.src .w { color: #D8DEE9 } /* Text.Whitespace */
+.src .mb { color: #B48EAD } /* Literal.Number.Bin */
+.src .mf { color: #B48EAD } /* Literal.Number.Float */
+.src .mh { color: #B48EAD } /* Literal.Number.Hex */
+.src .mi { color: #B48EAD } /* Literal.Number.Integer */
+.src .mo { color: #B48EAD } /* Literal.Number.Oct */
+.src .sa { color: #A3BE8C } /* Literal.String.Affix */
+.src .sb { color: #A3BE8C } /* Literal.String.Backtick */
+.src .sc { color: #A3BE8C } /* Literal.String.Char */
+.src .dl { color: #A3BE8C } /* Literal.String.Delimiter */
+.src .sd { color: #616E87 } /* Literal.String.Doc */
+.src .s2 { color: #A3BE8C } /* Literal.String.Double */
+.src .se { color: #EBCB8B } /* Literal.String.Escape */
+.src .sh { color: #A3BE8C } /* Literal.String.Heredoc */
+.src .si { color: #A3BE8C } /* Literal.String.Interpol */
+.src .sx { color: #A3BE8C } /* Literal.String.Other */
+.src .sr { color: #EBCB8B } /* Literal.String.Regex */
+.src .s1 { color: #A3BE8C } /* Literal.String.Single */
+.src .ss { color: #A3BE8C } /* Literal.String.Symbol */
+.src .bp { color: #81A1C1 } /* Name.Builtin.Pseudo */
+.src .fm { color: #88C0D0 } /* Name.Function.Magic */
+.src .vc { color: #D8DEE9 } /* Name.Variable.Class */
+.src .vg { color: #D8DEE9 } /* Name.Variable.Global */
+.src .vi { color: #D8DEE9 } /* Name.Variable.Instance */
+.src .vm { color: #D8DEE9 } /* Name.Variable.Magic */
+.src .il { color: #B48EAD } /* Literal.Number.Integer.Long */
+    </style>
+  </head>
+  <body>
+    <article class="wide">
+      <a class="back" href="/">&larr; index</a>
+      <h1>Neon serverless Postgres from Node</h1>
+      <p class="meta">centi.js &middot;
+        66 lines</p>
+      <div class="src"><pre><span></span><span class="linenos"> 1</span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;dotenv&quot;</span><span class="p">).</span><span class="nx">config</span><span class="p">();</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="kd">const</span><span class="w"> </span><span class="nx">http</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">);</span>
+<span class="linenos"> 5</span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">neon</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;./node_modules/@neondatabase/serverless&quot;</span><span class="p">);</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="kd">const</span><span class="w"> </span><span class="nx">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">neon</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DATABASE_URL</span><span class="p">);</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="kd">function</span><span class="w"> </span><span class="nx">csv_to_dict</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">10</span><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span><span class="s1">&#39;utf-8&#39;</span><span class="p">);</span>
+<span class="linenos">11</span><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csv</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\r?\n/</span><span class="p">)</span>
+<span class="linenos">12</span><span class="w">        </span><span class="p">.</span><span class="nx">map</span><span class="p">(</span>
+<span class="linenos">13</span><span class="w">            </span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span>
+<span class="linenos">14</span><span class="w">                </span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/(&quot;.*?&quot;|[^&quot;,]+)(?=\s*,|\s*$)/g</span><span class="p">)</span>
+<span class="linenos">15</span><span class="w">                </span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">cell</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cell</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^&quot;|&quot;$/</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+<span class="linenos">16</span><span class="w">        </span><span class="p">)</span>
+<span class="linenos">17</span><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rows</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
+<span class="linenos">18</span><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">fromEntries</span><span class="p">(</span>
+<span class="linenos">19</span><span class="w">        </span><span class="nx">header</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">label</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">[</span><span class="nx">label</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">[</span><span class="nx">i</span><span class="p">]])</span>
+<span class="linenos">20</span><span class="w">    </span><span class="p">))</span>
+<span class="linenos">21</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">data</span>
+<span class="linenos">22</span><span class="p">}</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="kd">const</span><span class="w"> </span><span class="nx">requestHandler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">25</span><span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">sql</span><span class="sb">`create table if not exists questions (</span>
+<span class="linenos">26</span><span class="sb">        id serial primary key,</span>
+<span class="linenos">27</span><span class="sb">        year integer,</span>
+<span class="linenos">28</span><span class="sb">        contest text,</span>
+<span class="linenos">29</span><span class="sb">        grade integer,</span>
+<span class="linenos">30</span><span class="sb">        q_num integer,</span>
+<span class="linenos">31</span><span class="sb">        q_text text,</span>
+<span class="linenos">32</span><span class="sb">        A text,</span>
+<span class="linenos">33</span><span class="sb">        B text,</span>
+<span class="linenos">34</span><span class="sb">        C text,</span>
+<span class="linenos">35</span><span class="sb">        D text,</span>
+<span class="linenos">36</span><span class="sb">        E text</span>
+<span class="linenos">37</span><span class="sb">  )`</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csv_to_dict</span><span class="p">(</span><span class="s1">&#39;./public/amc8-2025.csv&#39;</span><span class="p">)</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">row</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">42</span><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">sql</span><span class="sb">`INSERT INTO questions (year, contest, grade, q_num, q_text, A, B, C, D, E)</span>
+<span class="linenos">43</span><span class="sb">      VALUES (</span>
+<span class="linenos">44</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">year</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">45</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">contest</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">46</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">grade</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">47</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">q_num</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">48</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">q_text</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">49</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">A</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">50</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">B</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">51</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">C</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">52</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">D</span><span class="si">}</span><span class="sb">,</span>
+<span class="linenos">53</span><span class="sb">        </span><span class="si">${</span><span class="nx">row</span><span class="p">.</span><span class="nx">E</span><span class="si">}</span>
+<span class="linenos">54</span><span class="sb">      )`</span>
+<span class="linenos">55</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">sql</span><span class="sb">`SELECT * FROM questions`</span>
+<span class="linenos">58</span><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">rows</span><span class="p">)</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span><span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;text/plain&quot;</span><span class="w"> </span><span class="p">});</span>
+<span class="linenos">61</span><span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">rows</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span>
+<span class="linenos">62</span><span class="p">};</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span><span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">requestHandler</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mf">3000</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">65</span><span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Server running at http://localhost:3000&quot;</span><span class="p">);</span>
+<span class="linenos">66</span><span class="p">});</span>
+</pre></div>
+
+    </article>
+  </body>
+</html>
