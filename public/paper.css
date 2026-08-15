@@ -144,6 +144,61 @@ td:first-child {
   color: var(--bright);
 }
 
+/* Source listings need more room than prose does. */
+article.wide {
+  max-width: 60rem;
+}
+
+.meta {
+  margin: -0.25rem 0 2rem;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+}
+
+.src {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.src table {
+  font-size: inherit;
+}
+
+/* The prose tables above right-align their numeric cells; code must not
+   inherit that, and neither column may be styled as a first-column label. */
+.src td,
+.src th,
+.src td:first-child {
+  padding: 0;
+  border: 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.src .linenos {
+  padding: 1rem 0.75rem 1rem 1rem;
+  color: var(--muted);
+  text-align: right;
+  user-select: none;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.src .code {
+  padding: 1rem 1rem 1rem 0.25rem;
+  width: 100%;
+}
+
+.src pre {
+  margin: 0;
+  background: none;
+}
+
 .refs {
   margin-top: 3rem;
   padding-top: 1.5rem;
