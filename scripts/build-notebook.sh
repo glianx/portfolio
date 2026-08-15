@@ -19,9 +19,9 @@ SRC="${NOTEBOOK_SRC:-$ROOT/../portfolio_source}"
 
 # Notebooks published on the site, built when no argument is given. The output
 # is named after the notebook unless an entry supplies its own name after a
-# space — the cs371 homework copies are all called gordon.ipynb and would
-# otherwise overwrite each other in public/. knn/learnings.ipynb is scratch
-# and deliberately not published for the same reason.
+# space, which is what keeps two notebooks sharing a basename across repos
+# from overwriting each other in public/ — knn/learnings.ipynb is scratch and
+# deliberately not published for that reason.
 NOTEBOOKS=(
   "$SRC/neural-nets/mnist.ipynb"
   "$SRC/neural-nets/layers.ipynb"
@@ -36,12 +36,6 @@ NOTEBOOKS=(
   "$SRC/cs371-explore/softmax.ipynb"
   "$SRC/cs371-explore/softmax-K.ipynb"
   "$SRC/cs371-explore/linear_classifier.ipynb"
-  "$SRC/cs371/hw3/gordon.ipynb cs371-hw3"
-  "$SRC/cs371/hw4/gordon.ipynb cs371-hw4"
-  "$SRC/cs371/hw5/gordon.ipynb cs371-hw5"
-  "$SRC/cs371/hw6/gordon.ipynb cs371-hw6"
-  "$SRC/cs371/hw8/gordon.ipynb cs371-hw8"
-  "$SRC/cs371/hw9/gordon.ipynb cs371-hw9"
 )
 
 build() {
