@@ -39,7 +39,6 @@ SOURCES=(
   "$SRC/hello-world/probe/probe-server.py	probe	Probing a server's behaviour"
   "$SRC/hello-world/proxy/squid.conf	proxy	A forward proxy with Squid"
   "$SRC/hello-world/reverse-proxy/server.mjs	reverse-proxy	A reverse proxy in Node"
-  "$SRC/hello-world/sms/send-sms-oauth2.js	sms	Sending SMS over an OAuth2 API"
   "$SRC/hello-world/sql/music.sql	sql	A music database in SQL"
   "$SRC/hello-world/tcp/server.js	tcp	A TCP server on raw sockets"
   "$SRC/hello-world/tokens/main.py	tokens	Tokenizing text with tiktoken"

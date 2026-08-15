@@ -59,7 +59,6 @@ const webEntries: Entry[] = [
   { slug: "probe", href: "/probe.html", title: "Probing a server's behaviour" },
   { slug: "proxy", href: "/proxy.html", title: "A forward proxy with Squid" },
   { slug: "reverse-proxy", href: "/reverse-proxy.html", title: "A reverse proxy in Node" },
-  { slug: "sms", href: "/sms.html", title: "Sending SMS over an OAuth2 API" },
   { slug: "sql", href: "/sql.html", title: "A music database in SQL" },
   { slug: "tcp", href: "/tcp.html", title: "A TCP server on raw sockets" },
   { slug: "tokens", href: "/tokens.html", title: "Tokenizing text with tiktoken" },
