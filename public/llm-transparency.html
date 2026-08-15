@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LLMs for healthcare, and why they are not transparent — Gordon Liang</title>
+    <link rel="stylesheet" href="/paper.css" />
+  </head>
+  <body>
+    <article>
+      <a class="back" href="/">&larr; index</a>
+
+      <h1>LLMs for healthcare, and why they are not transparent</h1>
+
+      <p class="provenance">
+        My section of <em>AI in Healthcare: Disease Diagnoses, Autonomous
+        Workflows and Consumer LLMs</em>, a paper written with Ra&rsquo;Kira
+        Nelson, Cynthia Ma and Amy Chen. Only the part I wrote is reproduced
+        here; references are renumbered for this excerpt.
+      </p>
+
+      <h3>Introduction</h3>
+
+      <p>
+        Large Language Models (LLMs) seem to be the dream for individual health:
+        free, 24/7, personalized, and able to consider vast amounts of context.
+        In this section, we will explain how these models work, with a focus on
+        the attention mechanism which birthed ChatGPT and most modern LLMs [1].
+        By understanding how the LLM pipeline works, we can see how its very
+        nature gives rise to ethical concerns once applied to healthcare.
+      </p>
+
+      <h2>How it works</h2>
+
+      <h3>Word vectors</h3>
+
+      <p>
+        Humans associate words with concepts, and LLMs do the same. But while
+        humans read words as groups of letters, LLMs do not, because the letters
+        in a word do not convey useful information about its meaning. Instead,
+        every word is converted into a vector of numbers which represents its
+        meaning [1]. Each element in the vector reveals how similar it is to a
+        certain concept. For instance, the word &quot;Louvre&quot; would have
+        large values for the concepts &quot;museum&quot; and &quot;France&quot;
+        but low values on &quot;beverages&quot; and &quot;astronomy&quot;. By
+        having vectors in thousands of dimensions, a word&rsquo;s relationship to
+        thousands of concepts can be stored so that the word&rsquo;s meaning is
+        represented in a nuanced way. This leads to some notable properties.
+        First, words that are similar in meaning, such as &quot;cat&quot; and
+        &quot;dog&quot;, tend to have vectors that are near each other. This
+        makes sense, because they would both score high on dimensions such as
+        &quot;pet&quot;, &quot;mammal&quot;, and &quot;adorable&quot;. Second,
+        these vectors often encode meanings such that adding and subtracting
+        vectors can illustrate relationships between words. For instance, let us
+        consider a toy example with a vector pattern that represents a
+        word&rsquo;s relationship to four concepts: &quot;cardiovascular&quot;,
+        &quot;respiratory&quot;, &quot;organ&quot;, and &quot;resource&quot;. The
+        words &quot;heart&quot;, &quot;lungs&quot;, &quot;blood&quot;, and
+        &quot;oxygen&quot; could be encoded as follows:
+      </p>
+
+      <figure>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>cardiovascular</th>
+              <th>respiratory</th>
+              <th>organ</th>
+              <th>resource</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>heart</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>lungs</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+            <tr><td>blood</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>oxygen</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </figure>
+
+      <p>
+        Note what happens when we subtract &quot;heart&quot; from
+        &quot;blood&quot;, and add &quot;lungs&quot;:
+      </p>
+
+      <figure>
+        <p class="math">                        ⎡1⎤   ⎡1⎤   ⎡0⎤   ⎡0⎤
+blood − heart + lungs = ⎢0⎥ − ⎢0⎥ + ⎢1⎥ = ⎢1⎥ = oxygen
+                        ⎢0⎥   ⎢1⎥   ⎢1⎥   ⎢0⎥
+                        ⎣1⎦   ⎣0⎦   ⎣0⎦   ⎣1⎦</p>
+      </figure>
+
+      <p>
+        The result is oxygen, because oxygen flows in lungs as blood flows in
+        the heart. Despite not understanding anatomy, these simple vector
+        representations are able to represent the relationship between systems
+        in the body. When we consider that GPT-3 used vectors with 12,288
+        dimensions, we can reason how complex relationships can emerge between
+        words [1].
+      </p>
+
+      <h3>Attention</h3>
+
+      <p>
+        Consider a user typing into an LLM, &quot;my chest hurts&quot;. While it
+        is obvious to humans that the user is seeking relief from chest pain, a
+        computer cannot determine this as easily, because some words have two
+        meanings:
+      </p>
+
+      <ul>
+        <li>
+          chest: body part (&quot;my chest feels sore&quot;) or object (&quot;my
+          treasure chest&quot;)
+        </li>
+        <li>
+          hurts: physical (&quot;the blister hurts&quot;) or emotional (&quot;the
+          breakup hurts&quot;)
+        </li>
+      </ul>
+
+      <p>
+        Just like humans, any language model must look at surrounding words for
+        context to distinguish which meaning the words have taken [1]. This
+        inspires the concept of attention [2], which allows every word in a
+        prompt to change the meaning of every other word. It does so by
+        adjusting the word&rsquo;s vectors to reflect the new meaning. Above,
+        &quot;hurts&quot; would influence the &quot;chest&quot; vector to signify
+        the body part, while &quot;chest&quot; would likewise influence the
+        &quot;hurts&quot; vector to signify physical rather than emotional pain.
+      </p>
+
+      <p>
+        We will demonstrate how this process of attention is run. Let &quot;my
+        chest hurts&quot; be represented as vectors with concepts
+        &quot;physical&quot;, &quot;emotional&quot;, and &quot;object&quot;:
+      </p>
+
+      <figure>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>physical</th>
+              <th>emotional</th>
+              <th>object</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>my</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>chest</td><td>0.7</td><td>0</td><td>0.3</td></tr>
+            <tr><td>hurts</td><td>0.6</td><td>0.4</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </figure>
+
+      <p>We can represent this as a matrix X:</p>
+
+      <figure>
+        <p class="math">    ⎡0.0  0.0  0.0⎤
+X = ⎢0.7  0.0  0.3⎥
+    ⎣0.6  0.4  0.0⎦</p>
+      </figure>
+
+      <p>
+        The higher the value in X, the more related a word is to a concept. Note
+        how &quot;chest&quot; and &quot;hurts&quot; have values in two columns
+        because their meaning is ambiguous, while &quot;my&quot; is all zeros
+        because it does not denote anything in these concepts. In this example,
+        we want to increase the physical components of both &quot;chest&quot; and
+        &quot;hurts&quot; to represent their physical meaning. We do this by
+        updating X to have higher values in the physical columns.
+      </p>
+
+      <p>
+        A simple solution is to transform X with an &quot;attention matrix&quot;,
+        A, and add the transformed matrix (AX) back to X [2]. To figure out what
+        we want A to look like, consider that we want the physical component of
+        &quot;hurt&quot; to increase that of &quot;chest&quot;, and vice versa.
+        So the following attention matrix A allows &quot;hurt&quot; and
+        &quot;chest&quot; to update each other.
+      </p>
+
+      <figure>
+        <p class="math">    ⎡1.0  0.0  0.0⎤
+A = ⎢0.0  0.8  0.2⎥
+    ⎣0.0  0.2  0.8⎦</p>
+      </figure>
+
+      <p>
+        The row for &quot;chest&quot; in the transformed matrix AX is a linear
+        combination of the rows for &quot;chest&quot; and &quot;hurts&quot;. Each
+        value in this row mostly reflects the original value in
+        &quot;chest&quot;, but adds a fraction of the value in the corresponding
+        column in &quot;hurts&quot; to modify its meaning. The transformed
+        &quot;chest&quot; in AX is equal to 0.8 &times; chest + 0.2 &times;
+        hurts:
+      </p>
+
+      <figure>
+        <p class="math">     ⎡1.0  0.0  0.0⎤   ⎡0.0  0.0  0.0⎤   ⎡0.00  0.00  0.00⎤
+AX = ⎢0.0  0.8  0.2⎥ × ⎢0.7  0.0  0.3⎥ = ⎢0.68  0.08  0.24⎥
+     ⎣0.0  0.2  0.8⎦   ⎣0.6  0.4  0.0⎦   ⎣0.62  0.32  0.06⎦</p>
+      </figure>
+
+      <p>
+        So AX has high values in the physical column, as desired. Adding AX to
+        X, we get:
+      </p>
+
+      <figure>
+        <p class="math">              ⎡0.0  0.0  0.0⎤   ⎡0.00  0.00  0.00⎤   ⎡0.00  0.00  0.00⎤
+X' = X + AX = ⎢0.7  0.0  0.3⎥ + ⎢0.68  0.08  0.24⎥ = ⎢1.38  0.08  0.54⎥
+              ⎣0.6  0.4  0.0⎦   ⎣0.62  0.32  0.06⎦   ⎣1.22  0.72  0.06⎦</p>
+      </figure>
+
+      <p>
+        The updated matrix, X&rsquo;, now has much higher values in the physical
+        column compared to X. This reflects that &quot;hurts&quot; and
+        &quot;chest&quot; modified each other&rsquo;s meanings to be more
+        physical. But we don&rsquo;t want the values in X to keep growing,
+        because it would be computationally unstable to deal with huge numbers
+        [2]. So we normalize each row by measuring how many standard deviations
+        each value is from the mean in that row, known as the z-score:
+      </p>
+
+      <figure>
+        <p class="math">       x − μ_row
+z(x) = ─────────
+         σ_row</p>
+      </figure>
+
+      <p>
+        Applying this function to every value in each row, we get a &quot;layer
+        normalized&quot; version of X [2]:
+      </p>
+
+      <figure>
+        <p class="math">                     ⎡ 0.00   0.00   0.00⎤
+X' = layernorm(X') = ⎢ 1.08  −0.89  −0.19⎥
+                     ⎣ 0.95   0.09  −1.04⎦</p>
+      </figure>
+
+      <p>
+        As seen, the values in the physical column for &quot;chest&quot; and
+        &quot;hurts&quot; are 1.08 and 0.95 standard deviations above the mean,
+        and are the maximum values in their rows. But they are smaller than their
+        previous raw values of 1.38 and 1.22, so the normalization has conserved
+        the relative emphasis on their physical aspects while reducing the
+        magnitude of the values.
+      </p>
+
+      <h3>Neural network</h3>
+
+      <p>
+        After the initial matrix has been updated to include context from the
+        attention process, it is passed as input into a feed-forward neural
+        network with two layers [2]:
+      </p>
+
+      <figure>
+        <p class="math">FFN(X) = ReLU(XW₁ + b₁)W₂ + b₂</p>
+      </figure>
+
+      <p>
+        The neural network has two purposes. First, it allows the LLM to
+        reference knowledge from external sources [1]. This can happen because
+        texts such as books, newspapers, and websites were used to
+        &quot;train&quot; the weights W₁, W₂, b₁, b₂ of the neural network. These
+        weights &quot;compress&quot; the textual information from these sources
+        into a compact numerical form. In our case, sources such as medical
+        textbooks and journal articles would give an LLM medical knowledge,
+        similar to what a doctor would have. Note that this is stored in the
+        weights during training, and the LLM does not have real-time access to
+        external sources afterwards.
+      </p>
+
+      <p>
+        Second, it allows the LLM to be more expressive. As seen above,
+        attention transforms the values of the matrix X in a simple way, but
+        often we want to model a more nuanced relationship between inputs and
+        outputs. Adding a neural network with a nonlinear &quot;activation
+        function&quot; such as ReLU(x) = max(0, x) lets the LLM approximate more
+        complex functions. Indeed, it can now approximate any continuous
+        function, according to a neat proof known as the Universal Approximation
+        Theorem. This gives LLM the power to handle complex relationships in
+        language and concepts.
+      </p>
+
+      <p>
+        The output of the neural network is a matrix of the same shape as the
+        input, updated with context from external sources.
+      </p>
+
+      <h3>Layers</h3>
+
+      <p>
+        Attention enriches the context of the matrix X by looking at words
+        within the input prompt, while the neural network injects context from
+        external sources. So, combining them into a &quot;layer&quot; allows the
+        LLM to consider both internal and external sources [1]. But we can go
+        further and combine several layers into a stack, so the LLM alternates
+        its updates using internal and external information [2]. It iteratively
+        refines the context to be more and more accurate.
+      </p>
+
+      <p>
+        The output from the final layer is the matrix X of all words in the
+        input prompt, with the full context from the prompt and external
+        sources. All the context makes it so that each word becomes very
+        predictive of the next word. This is due to how the neural network was
+        trained: it learns to &quot;guess&quot; the word that follows a given
+        context-enriched word.
+      </p>
+
+      <p>
+        So the last word of the sequence in the final layer is used to generate a
+        new word. In our example, the word &quot;hurts&quot; would have all the
+        context from &quot;chest&quot; and context from medical textbooks to
+        predict the next word. Its vector gets converted into a probability
+        distribution over all possible words, based on how likely it is to
+        appear after. Then one word, such as the one with the greatest
+        probability, is selected from this distribution. The LLM continues this
+        process of selecting new words from a probability distribution until the
+        response is complete.
+      </p>
+
+      <h2>Transparency</h2>
+
+      <p>
+        LLMs are not very transparent. First, the word vectors have a staggering
+        size of thousands of dimensions [1]. To a human, they just look like long
+        lists of meaningless numbers. Not only that, but these dimensions usually
+        do not map to simple human concepts. While in our explanation we used
+        dimensions such as &quot;museum&quot;, &quot;adorable&quot;, and
+        &quot;physical&quot;, the concepts used in word vectors may be so complex
+        that they are not grounded in any human meaning [1].
+      </p>
+
+      <p>
+        Second, attention is not transparent. It uses an attention matrix filled
+        with numbers that are learned during training [2]. These numbers can
+        appear to be arbitrary and do not explain where they came from. Like the
+        word vectors, it is hard to tell what is going on here.
+      </p>
+
+      <p>
+        Finally, the neural network is not transparent. Like attention, its
+        weights and biases are learned during training [2]. Massive quantities of
+        numbers are used to calculate the output every time an input is passed
+        into a neural network in a way that is incomprehensible to any observer.
+      </p>
+
+      <p>
+        This means that the concerns about AI transparency discussed in this
+        paper are very applicable to LLMs.
+      </p>
+
+      <h2>Hallucinations</h2>
+
+      <p>
+        As explained above, LLMs use a probability distribution to generate the
+        next word. This means that their outputs are not verified to be
+        reasonable or correct, but are just the result of repeated sampling from
+        a distribution. As a result, advice and diagnoses which sound factual and
+        well-considered can be misleading, incorrect, or harmful. This phenomenon
+        emerges from the very nature of LLMs and is known as a hallucination.
+        This is critical in the application to healthcare and raises concerns for
+        misdiagnoses and liability that we discuss in the rest of this paper.
+      </p>
+
+      <div class="refs">
+        <h3>References</h3>
+        <ol>
+          <li>
+            T. B. Lee, &ldquo;A jargon-free explanation of how AI large language
+            models work,&rdquo; <em>Ars Technica</em>. Accessed: Apr. 20, 2026.
+            [Online]. Available:
+            <a
+              href="https://arstechnica.com/science/2023/07/a-jargon-free-explanation-of-how-ai-large-language-models-work/"
+              >https://arstechnica.com/science/2023/07/a-jargon-free-explanation-of-how-ai-large-language-models-work/</a
+            >
+          </li>
+          <li>
+            A. Vaswani et al., &ldquo;Attention is All you Need,&rdquo; in
+            <em>Advances in Neural Information Processing Systems</em>, Curran
+            Associates, Inc., 2017. Accessed: Apr. 20, 2026. [Online].
+            Available:
+            <a
+              href="https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html"
+              >https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html</a
+            >
+          </li>
+        </ol>
+      </div>
+    </article>
+  </body>
+</html>

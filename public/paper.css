@@ -1,0 +1,168 @@
+/*
+ * Shared styling for the prose excerpts in public/. Tokyo Night, to match the
+ * themed notebook exports these sit beside in the index.
+ */
+
+:root {
+  --bg: #1a1b26;
+  --panel: #16161e;
+  --fg: #c0caf5;
+  --bright: #e6eaf7;
+  --muted: #787c99;
+  --rule: #2a2e42;
+  --accent: #7aa2f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 3rem 1.5rem 6rem;
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.7 ui-sans-serif, system-ui, -apple-system, "Helvetica Neue",
+    Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+article {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: var(--bright);
+}
+
+h2 {
+  margin: 2.75rem 0 1rem;
+  font-size: 1.1rem;
+  color: var(--bright);
+}
+
+h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+p {
+  margin: 0 0 1.15rem;
+}
+
+/* Where the excerpt came from, and who else wrote the parts that are not
+   here. Sits above the text so it is read before the argument is. */
+.provenance {
+  margin: 0 0 2.5rem;
+  padding: 1rem 1.15rem;
+  background: var(--panel);
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.provenance a {
+  color: var(--accent);
+}
+
+ul {
+  margin: 0 0 1.15rem;
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+/* Figures: tables and matrices from the original, re-typeset rather than
+   screenshotted, so they stay selectable and scale with the text. */
+figure {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+}
+
+th,
+td {
+  padding: 0.35rem 0.9rem;
+  text-align: right;
+  border-bottom: 1px solid var(--rule);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+tbody th,
+td:first-child {
+  text-align: left;
+}
+
+.math {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  white-space: pre;
+  color: var(--bright);
+}
+
+.refs {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.refs ol {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: var(--muted);
+}
+
+.refs li {
+  margin-bottom: 0.75rem;
+}
+
+.refs a {
+  color: var(--accent);
+  word-break: break-word;
+}

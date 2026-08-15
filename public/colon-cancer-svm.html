@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>An exemplar of AI for disease diagnosis — Gordon Liang</title>
+    <link rel="stylesheet" href="/paper.css" />
+  </head>
+  <body>
+    <article>
+      <a class="back" href="/">&larr; index</a>
+
+      <h1>An exemplar of AI for disease diagnosis</h1>
+
+      <p class="provenance">
+        My section of <em>AI in Healthcare: Disease Diagnoses, Autonomous
+        Workflows and Consumer LLMs</em>, a paper written with Ra&rsquo;Kira
+        Nelson, Cynthia Ma and Amy Chen. Only the part I wrote is reproduced
+        here; references are renumbered for this excerpt.
+      </p>
+
+      <h3>Introduction</h3>
+
+      <p>
+        Around 56,000 Americans die every year from colon cancer, with one in
+        twenty developing the disease [1]. One exemplary demonstration of how AI
+        can be applied to healthcare is a groundbreaking paper that introduced a
+        new computer vision technique to detect cancerous polyps in the colon
+        with high accuracy. In this section, we will explain how this technique
+        works and the decisions behind its design.
+      </p>
+
+      <h3>How it works</h3>
+
+      <p>
+        To generate the data, a virtual colonoscopy is conducted via a computed
+        tomography (CT) scan [1], in which an X-ray scanner rotates around the
+        patient to construct a 3D view of the colon.
+      </p>
+
+      <p>
+        To find candidates for polyps in the colon, we look for surfaces which
+        are spherical in shape. If the inward normal vectors for the surfaces
+        intersect around a single point, that is, the center of a sphere, then
+        the surface must be approximately spherical, and is considered a polyp
+        candidate. This technique, which identifies shapes by the intersection
+        of normal vectors, is known as the Hough Transform [1].
+      </p>
+
+      <p>
+        Previously, this was the best way to look for polyps, but the issue was
+        that any spherical shape would be flagged. Many of these were not
+        polyps, but merely normal tissue. This high rate of false positives
+        meant that radiologists spent lots of time looking through the
+        candidates to determine what actually is a polyp. So the contribution of
+        the paper is the pipeline that follows which effectively classifies the
+        polyps among these candidates.
+      </p>
+
+      <p>
+        The key technique of the paper is inspired by how radiologists view the
+        3D scans of polyp candidates [1]. They use three perspectives: the
+        axial, sagittal, and coronal planes, i.e. from the top, side, and front.
+        Each of these planes are orthogonal to the others to provide a fuller
+        view of the candidate shape. This paper uses the same concept, but takes
+        many such triples of cross-sections, with triple oriented in a random
+        rotation to account for any orientation of the candidate. One hundred of
+        these triples of perpendicular &quot;slices&quot; are taken per
+        candidate. That is the namesake of the technique, Random Orthogonal
+        Shape Sections (ROSS) [1].
+      </p>
+
+      <p>
+        These cross-sectional images are matched against simple shapes such as
+        circles, ellipsoids, and quadratics to see how well they fit. The
+        concept is that knowing how accurately different shapes match the image
+        can give us an idea of how the image looks [1].
+      </p>
+
+      <p>
+        These measurements are used to populate a histogram, which acts as a
+        &quot;signature&quot; for the image [1]. Polyps and normal tissue tend to
+        have different looking histograms, so they will be used as input for the
+        classification model.
+      </p>
+
+      <p>
+        The paper uses a standard technique known as a Support Vector Machine
+        (SVM) to classify the polyps [1]. This technique projects data points
+        into higher-dimensional space with a function known as a kernel, then
+        separates the data with a hyperplane. This acts as the decision
+        boundary, so points are classified as polyps or normal based on which
+        side of the hyperplane they are on. The data and the hyperplane are
+        projected back down into the original dimension to create a nonlinear
+        decision boundary.
+      </p>
+
+      <p>
+        This pipeline had groundbreaking results, and was able to detect polyps
+        while flagging much fewer normal tissues. At a sensitivity of 1.00, which
+        means that every polyp is flagged, the percentage of normal tissue
+        classified as normal increased from 19% to 69% [1]. While radiologists
+        previously had to deal with lots of normal tissue incorrectly flagged as
+        polyps, now they can save time because the candidates are much more
+        likely to be actual polyps. This speeds up the diagnostic process and
+        benefits both the radiologists and the patients.
+      </p>
+
+      <h3>Transparency</h3>
+
+      <p>
+        One key advantage of this paper is that it uses Support Vector Machines.
+        This is a traditional AI technique which is very interpretable, because
+        it reveals which inputs are used to mark the decision boundary. Known as
+        the &quot;support vectors&quot;, they represent the data points which
+        happen to be nearest the decision boundary. In our case, the support
+        vectors would be the histograms of the polyp candidates which influence
+        where the line is drawn between normal tissue and cancerous polyps.
+      </p>
+
+      <p>
+        This transparency is very useful for analyzing the model and
+        understanding how it makes its decisions. Researchers can tweak the
+        model if something looks off, and radiologists can learn about the
+        features of a candidate that sits near the border of normal and
+        cancerous. The accuracy of both the AI and human diagnoses can be
+        improved in this way.
+      </p>
+
+      <p>
+        Transparency is a fundamental issue of modern AI that we discuss in
+        detail. So, this paper is an exemplar of how AI can be both effective and
+        transparent, and illustrates the desirable benefits that transparency
+        brings.
+      </p>
+
+      <div class="refs">
+        <h3>References</h3>
+        <ol>
+          <li>
+            S. B. Göktürk et al., &ldquo;A statistical 3-D pattern processing
+            method for computer-aided detection of polyps in CT
+            colonography,&rdquo; <em>IEEE Trans. Med. Imaging</em>, vol. 20, no.
+            12, pp. 1251&ndash;1260, Dec. 2001, doi:
+            <a href="https://doi.org/10.1109/42.974920">10.1109/42.974920</a>.
+          </li>
+        </ol>
+      </div>
+    </article>
+  </body>
+</html>

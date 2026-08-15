@@ -9,10 +9,15 @@ type Entry = {
 // The index reads as one run of monospace text, so each entry is just its
 // slug. Alphabetical — the order carries no ranking.
 const entries: Entry[] = [
+  { slug: "attention", href: "/attention.html", title: "The attention mechanism taken apart by hand in Julia" },
   { slug: "autoencoder", href: "/undercomplete.html", title: "Undercomplete autoencoder — 784 to 100 to 784 on FashionMNIST" },
+  { slug: "colon-cancer-svm", href: "/colon-cancer-svm.html", title: "Writing — SVM-based detection of cancerous colon polyps" },
+  { slug: "iv-curves", href: "/i-v.html", title: "Neuron I–V curves with interactive ion-concentration sliders" },
   { slug: "knn", href: "/knn.html", title: "k-nearest neighbours on Iris — no training loop, 96.7%" },
+  { slug: "llm-transparency", href: "/llm-transparency.html", title: "Writing — why LLMs are opaque, and what that means for consumer health" },
   { slug: "mlp", href: "/layers.html", title: "Two-layer MNIST — ReLU hidden layer, He init, 96.95%" },
   { slug: "mlp-failures", href: "/learnings.html", title: "How neural nets break — dead ReLUs, softmax saturation" },
+  { slug: "nernst", href: "/nernst.html", title: "The Nernst equation over sodium concentrations, in 3D" },
   { slug: "ngram", href: "/ngram.html", title: "An n-gram language model on Frankenstein" },
   { slug: "softmax-regression", href: "/mnist.html", title: "MNIST from scratch — one layer, hand-derived gradients, 90.91%" },
 ];
