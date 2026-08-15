@@ -91,7 +91,9 @@ h1 {
 .cloud {
   display: block;
   width: 100%;
-  font-size: clamp(1.75rem, 6.5vw, 4.25rem);
+  /* Sized so the whole index fits one screen at the current entry count —
+     shrink this again when enough entries are added to overflow. */
+  font-size: clamp(1.1rem, 3.6vw, 2.4rem);
   line-height: 1.12;
   letter-spacing: -0.02em;
   word-spacing: 0.1em;
