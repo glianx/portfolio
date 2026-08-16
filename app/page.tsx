@@ -1,7 +1,5 @@
 import { Space_Mono } from "next/font/google";
 
-import Mail from "./mail";
-
 // A second face for the web dev index, so the two sections read as
 // different bodies of work at a glance rather than one long list.
 const webFont = Space_Mono({ subsets: ["latin"], weight: ["400", "700"] });
@@ -101,7 +99,9 @@ export default function Home() {
 
       <footer>
         <a href="https://github.com/glianx">github</a>
-        <Mail />
+        {/* Plain text, not a mailto: — the address is for a human to read and
+            type, and there is no link for a harvester to follow. */}
+        <span className="mail">gordon [at] liang [dot] ca</span>
       </footer>
     </main>
   );
